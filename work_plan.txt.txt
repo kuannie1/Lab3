@@ -1,0 +1,50 @@
+﻿Annie Ku and Prava Dhulipalla
+
+
+Comp Arch Lab 3: CPU
+
+
+Type of processor: pipelined CPU
+
+
+Work Plan (Finish by 11/5/17)
+- meet and write work plan (0.5 hours)
+
+
+Schematic for Single-Cycle CPU (Finish by 11/8/17)
+- understanding/going over material again (1.5 hours)
+- drawing schematic (1 hour)
+- making ALU into behavioral Verilog (optional) (1.5 hours)
+- getting schematic checked off (0.5 hours)
+
+
+Verilog implementation of Single-Cycle CPU (Finish by 11/10/17)
+- implementing CPU in code (1.5 hours)
+- debugging (1.5 hours)
+
+
+Writing Assembly Tests (Finish by 11/10/17)
+- becoming comfortable with assembly (2 hours)
+- writing two tests in assembly (2 hours)
+
+
+Schematic and Verilog implementation of pipelined CPU
+- understanding pipelined CPU (1 hours)
+- drawing schematic (1 hour)
+- accounting for hazards (1.5 hours)
+- implementing through Verilog (1 hour)
+- debugging (1.5 hours)
+
+
+Test program deliverables (Finish by 11/14/17)
+- write up expected results of tests, memory layout requirements, instructions used outside of basic required subset (0.5 hours)
+
+
+Verilog test benches
+- testing all the instructions (2.5 hours)
+- debugging (1.5 hours)
+
+
+Final lab report
+- compiling everything (0.5 hours)
+- writing up lab report (1.5 hours)
