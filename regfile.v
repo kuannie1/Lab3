@@ -70,12 +70,3 @@ input			Clk		// Clock (Positive Edge Triggered)
   mux32to1by32 mux2(ReadData2, ReadRegister2, q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31);
 
 endmodule
-
-
-// one register file for cases where all registers have something in it
-
-// one register file for cases where decoder returns all 1s? Like 
-
-// one register file where register 0 returns something instead of all 0s
-
-// one register file where port x of decoder always returns the wrong register file
