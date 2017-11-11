@@ -15,6 +15,14 @@ module mux32to1by1(
 	assign outputofmux=inputsofmux[address];
 endmodule
 
+module mux2to1(
+  output      outputofmux,
+  input       address,
+  input[1:0]  inputsofmux
+);
+  assign outputofmux=inputsofmux[address];
+endmodule
+
 module mux32to1by32(
 	output[31:0]  out,
 	input[4:0]    address,

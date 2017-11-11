@@ -1,0 +1,115 @@
+$date
+	Sat Nov 11 01:19:58 2017
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module mux32to1by1 $end
+$var wire 5 ! address [4:0] $end
+$var wire 32 " inputsofmux [31:0] $end
+$var wire 1 # outputofmux $end
+$upscope $end
+$scope module mux32to1by32 $end
+$var wire 5 $ address [4:0] $end
+$var wire 32 % input0 [31:0] $end
+$var wire 32 & input1 [31:0] $end
+$var wire 32 ' input10 [31:0] $end
+$var wire 32 ( input11 [31:0] $end
+$var wire 32 ) input12 [31:0] $end
+$var wire 32 * input13 [31:0] $end
+$var wire 32 + input14 [31:0] $end
+$var wire 32 , input15 [31:0] $end
+$var wire 32 - input16 [31:0] $end
+$var wire 32 . input17 [31:0] $end
+$var wire 32 / input18 [31:0] $end
+$var wire 32 0 input19 [31:0] $end
+$var wire 32 1 input2 [31:0] $end
+$var wire 32 2 input20 [31:0] $end
+$var wire 32 3 input21 [31:0] $end
+$var wire 32 4 input22 [31:0] $end
+$var wire 32 5 input23 [31:0] $end
+$var wire 32 6 input24 [31:0] $end
+$var wire 32 7 input25 [31:0] $end
+$var wire 32 8 input26 [31:0] $end
+$var wire 32 9 input27 [31:0] $end
+$var wire 32 : input28 [31:0] $end
+$var wire 32 ; input29 [31:0] $end
+$var wire 32 < input3 [31:0] $end
+$var wire 32 = input30 [31:0] $end
+$var wire 32 > input31 [31:0] $end
+$var wire 32 ? input4 [31:0] $end
+$var wire 32 @ input5 [31:0] $end
+$var wire 32 A input6 [31:0] $end
+$var wire 32 B input7 [31:0] $end
+$var wire 32 C input8 [31:0] $end
+$var wire 32 D input9 [31:0] $end
+$var wire 32 E out [31:0] $end
+$upscope $end
+$scope module testMux $end
+$var wire 1 F outputs $end
+$var reg 1 G address $end
+$var reg 2 H inputs [1:0] $end
+$scope module dut $end
+$var wire 1 I address $end
+$var wire 2 J inputsofmux [1:0] $end
+$var wire 1 F outputofmux $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b1 J
+xI
+b1 H
+xG
+xF
+bx E
+bz D
+bz C
+bz B
+bz A
+bz @
+bz ?
+bz >
+bz =
+bz <
+bz ;
+bz :
+bz 9
+bz 8
+bz 7
+bz 6
+bz 5
+bz 4
+bz 3
+bz 2
+bz 1
+bz 0
+bz /
+bz .
+bz -
+bz ,
+bz +
+bz *
+bz )
+bz (
+bz '
+bz &
+bz %
+bz $
+x#
+bz "
+bz !
+$end
+#50
+0G
+0I
+1F
+#100
+1G
+1I
+0F
+#150
