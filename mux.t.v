@@ -1,25 +1,25 @@
 `include "mux.v"
 
 module testMux();
-	wire outputs;
-	reg address;
-	reg[1:0] inputs;
+	wire 2to1output;
+	reg 2to1selector;
+	reg[1:0] 2to1inputs;
 
-	mux2to1 dut(.outputofmux(outputs),
-				.address(address),
-				.inputsofmux(inputs));
+	mux2to1 dut(.outputofmux(2to1output),
+				.2to1selector(2to1selector),
+				.inputsofmux(2to1inputs));
 
 	initial begin
 		$dumpfile("muxtest.vcd");
 		$dumpvars();
-		// set inputs
-		inputs[0] = 1;inputs[1] = 0; #50
+		// set 2to1inputs
+		2to1inputs[0] = 1;2to1inputs[1] = 0; #50
 
-		// set address = 0
-		address=0; #50
-		$display("Output: %b", outputs);
+		// set 2to1selector = 0
+		2to1selector=0; #50
+		$display("Output: %b", 2to1output);
 
-		address=1; #50
-		$display("Output: %b", outputs);
+		2to1selector=1; #50
+		$display("Output: %b", 2to1output);
 	end
 endmodule
