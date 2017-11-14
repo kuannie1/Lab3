@@ -33,12 +33,14 @@ bne	$t5, 0, reassign	# if $t5 isn't equal to 0, go to a label that reassigns $t4
 addi	$t2, $t2, 1		# increment i counter
 addi	$t3, $t3, 4		# increment address by 1 word
 j	LOOPSTART		# GOTO start of loop
-LOOPEND:
-add   	$v0, $zero, $t4		# assign final minimum to v0
 
 reassign:
 addi	$t4, $t6, 0		# reassign the smallest value to the current element
-jal 	LOOPSTART
+j 	LOOPSTART
+
+LOOPEND:
+add   	$v0, $zero, $t4		# assign final minimum to v0
+
 
 
 #------------------------------------------------------------------------------
@@ -52,13 +54,13 @@ j    program_end
 #  Note that I have given the data values a distinctive pattern to help with debugging
 .data 
 my_array:
-0x00000000	# my_array[0]
-0x11110000
+0x11110000	# my_array[0]
 0x22220000
 0x33330000
 0x44440000
 0x55550000
 0x66660000
+0x00000000
 0x77770000
 0x88880000
 0x99990000
