@@ -9,6 +9,7 @@
 `include "instructiondecode.v"
 `include "controlLUT.v"
 `include "regfile.v"
+`include "datamemory.v"
 
 
 module CPU
@@ -27,7 +28,7 @@ wire alu0_carryout, alu0_zero, alu0_overflow;
 
 // initialize IF phase
 
-signextend se(.num(pc), .result(pc_signextend));
+signextend se0(.num(pc), .result(pc_signextend));
 
 dff #(16) dflipflop(.clk(clk), .we(1'b1), .dataIn(pc_signextend), .dataOut(pc_signextend));
 
@@ -56,6 +57,8 @@ wire [2:0] ALU_op;
 
 wire [31:0] read0, read1;
 
+wire [31:0] dm_out;
+
 instructiondecode id(.instruction(instruction), .op_code(op_code), .func(func), .Rs(Rs), .Rt(Rt), .Rd(Rd),
 	.shift(shift), .imm(imm), .target(target));
 
@@ -66,5 +69,18 @@ controlLUT cl(.op_code(op_code), .func(func), .reg_dst(reg_dst), .ALU_src(ALU_sr
 // change WriteData input, it is just 0 for now
 regfile rf(.ReadData1(read0), .ReadData2(read1), .WriteData(32'b0),
 	.ReadRegister1(Rs), .ReadRegister2(Rt), .WriteRegister(Rd), .RegWrite(reg_write), .Clk(clk));
+
+// initialize execute phase
+
+// lw components
+wire [31:0] signextendimm_lw, ALUresult_lw;
+wire alu1_carryout, alu1_zero, alu1_overflow;
+
+signextend se1(.num(imm), .result(signextendimm_lw));
+
+ALU alu1(.result(ALUresult_lw), .carryout(alu1_carryout), .zero(alu1_zero), .overflow(alu1_overflow),
+	.operandA(read0), .operandB(read1), .command(ALU_op));
+
+datamemory #(32, 2, ) dm(.clk(clk), )
 
 endmodule
