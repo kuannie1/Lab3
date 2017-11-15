@@ -57,12 +57,12 @@ datamemory 		dm(.clk(clk),
     			.dataIn(sr_parallel_out));
 
 dff #(8) address_latch (.clk(clk),
-						.ce(addr_we),
+						.we(addr_we),
 						.dataIn(sr_parallel_out),
 						.dataOut(address));
 
 dff #(1) d_flipflop (.clk(clk),
-					.ce(sclk_ne),
+					.we(sclk_ne),
 					.dataIn(sr_serial_out),
 					.dataOut(dff_out));
 

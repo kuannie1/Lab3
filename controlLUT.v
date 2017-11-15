@@ -1,5 +1,13 @@
 /*
 	Determines what signals need to be passed through.
+	reg_dst: determines destination of write address (different for R-type and other types of instruction)
+	alu_src: mux control signal for the B operand
+	mem_to_reg: write enable for the register file frin memory
+	mem_read: 'read enable' signal for data memory
+	mem_write: write enable signal for data memory
+	reg_write: write enable for register
+	branch: is there a branch needed
+	jump: is there a jump needed
 */
 
 module controlLUT 
@@ -42,7 +50,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 0;
+				ALU_op <= 3'bx;
 			end
 
 			SW: begin
@@ -56,7 +64,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 0;
+				ALU_op <= 3'bx;
 			end
 
 			J: begin
@@ -70,7 +78,7 @@ module controlLUT
 				jump <= 1;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 0;
+				ALU_op <= 3'bx;
 			end
 
 			JAL: begin
@@ -84,7 +92,7 @@ module controlLUT
 				jump <= 1;
 				jump_and_link <= 1;
 				jump_reg <= 0;
-				ALU_op <= 0;
+				ALU_op <= 3'bx;
 			end
 
 			BNE: begin
@@ -186,7 +194,7 @@ module controlLUT
 						jump <= 0;
 						jump_and_link <= 0;
 						jump_reg <= 1;
-						ALU_op <= 0; 
+						ALU_op <= 3'bx; 
 					end
 
 					// just in case - everything zero!
