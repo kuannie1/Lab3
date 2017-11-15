@@ -46,7 +46,7 @@ add   	$v0, $zero, $t4		# assign final minimum to v0
 #------------------------------------------------------------------------------
 # Jump loop to end execution, so we don't fall through to .data section
 program_end:
-j    program_end
+j program_end
 
 
 

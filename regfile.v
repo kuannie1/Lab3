@@ -1,5 +1,5 @@
-`include "decoders.v"
-`include "register.v"
+`include "RegFile/decoders.v"
+`include "RegFile/register.v"
 `include "mux.v"
 
 //------------------------------------------------------------------------------
@@ -34,15 +34,15 @@ input			Clk		// Clock (Positive Edge Triggered)
   			q28, q29, q30, q31;
 
   register32zero register0(q0, WriteData, selectregister[0], Clk);
-  register32 register1( q1,  WriteData, selectregister[1], Clk);
-  register32 register2( q2,  WriteData, selectregister[2], Clk);
-  register32 register3( q3,  WriteData, selectregister[3], Clk);
-  register32 register4( q4,  WriteData, selectregister[4], Clk);
-  register32 register5( q5,  WriteData, selectregister[5], Clk);
-  register32 register6( q6,  WriteData, selectregister[6], Clk);
-  register32 register7( q7,  WriteData, selectregister[7], Clk);
-  register32 register8( q8,  WriteData, selectregister[8], Clk);
-  register32 register9( q9,  WriteData, selectregister[9], Clk);
+  register32 register1(  q1, WriteData, selectregister[1], Clk);
+  register32 register2(  q2, WriteData, selectregister[2], Clk);
+  register32 register3(  q3, WriteData, selectregister[3], Clk);
+  register32 register4(  q4, WriteData, selectregister[4], Clk);
+  register32 register5(  q5, WriteData, selectregister[5], Clk);
+  register32 register6(  q6, WriteData, selectregister[6], Clk);
+  register32 register7(  q7, WriteData, selectregister[7], Clk);
+  register32 register8(  q8, WriteData, selectregister[8], Clk);
+  register32 register9(  q9, WriteData, selectregister[9], Clk);
   register32 register10(q10, WriteData, selectregister[10], Clk);
   register32 register11(q11, WriteData, selectregister[11], Clk);
   register32 register12(q12, WriteData, selectregister[12], Clk);

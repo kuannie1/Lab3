@@ -2,12 +2,12 @@
 // SPI Memory
 //------------------------------------------------------------------------
 
-`include "shiftregister.v"
-`include "inputconditioner.v"
-`include "datamemory.v"
-`include "spifsm.v"
-`include "dff.v"
-`include "tristate.v"
+`include "SPI/shiftregister.v"
+`include "SPI/inputconditioner.v"
+`include "SPI/datamemory.v"
+`include "SPI/spifsm.v"
+`include "SPI/dff.v"
+`include "SPI/tristate.v"
 
 module spiMemory
 (

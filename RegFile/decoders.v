@@ -12,8 +12,3 @@ input[4:0]	address
 
 endmodule
 
-//Description of how it works
-/*
-If you left-shift the enable bit (equals 1) by all the bit possibilities in address, the largest value you get is 32.
-This helps you get all of the output possibilities you need in a decoder, all from 5 bits. 
-*/
