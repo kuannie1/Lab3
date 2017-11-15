@@ -18,9 +18,13 @@ endmodule
 module mux2to1(
   output      outputofmux,
   input       address,
-  input[1:0]  inputsofmux
+  input[31:0] input0, input1
 );
-  assign outputofmux=inputsofmux[address];
+  wire[31:0] mux[1:0]; // create 2D array of wires
+  assign mux[0] = input0;
+  assign mux[1] = input1;
+  assign outputofmux=mux[address];
+  
 endmodule
 
 module mux32to1by32(
