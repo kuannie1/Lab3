@@ -15,13 +15,13 @@
 module CPU
 (
 	input clk,
-	input [15:0] pc,
-	output [31:0] instruction	// this is the 32 bit instruction: 1 and 0s that need to be decoded
+	input [31:0] pc,
+	output [31:0] instruction	// 
 );
 
 //wire [15:0] pc_signextend; //What's this? do we need this
-wire [15:0] pcplus4; //The next instsructure
-
+wire [31:0] pcplus4; //The next instsructure
+wire [31:0] pc_out;
 wire [4:0] branch; //what's this?
 
 wire alu0_carryout, alu0_zero, alu0_overflow;
@@ -30,13 +30,11 @@ wire alu0_carryout, alu0_zero, alu0_overflow;
 
 //signextend se0(.num(pc), .result(pc_signextend)); //why do we need this? is pc not always positive?
 
-dff #(16) dflipflop(.clk(clk), .we(1'b1), .dataIn(pc_signextend), .dataOut(pc_signextend));
+dff #(16) dflipflop(.clk(clk), .we(1'b1), .dataIn(pc), .dataOut(pc_out));
 
-ALU alu0(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
+ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
 	.operandA(pc), .operandB(32'd4), .command(3'd0));
 
-// control logic for selecting pc vs pc + 4 ???
-mux2to1 mux0(.out(pc_signextend), .address(branch), .input0(pcplus4), .input1(pc));
 
 // 	ERROR: ADDR IS ONLY 10 BITS
 // FIX
@@ -50,12 +48,12 @@ wire [4:0]	Rs, Rt, Rd;
 wire [4:0]	shift;
 wire [15:0]	imm;
 wire [25:0]	target;
-
+//Control signals:
 wire reg_dst, ALU_src, mem_to_reg, mem_read, mem_write, reg_write;
 wire branch, jump, jump_and_link, jump_reg;
 wire [2:0] ALU_op;
 
-wire [31:0] read0, read1;
+wire [31:0] read1, read2;
 
 wire [31:0] dm_out;
 
@@ -66,21 +64,44 @@ controlLUT cl(.op_code(op_code), .func(func), .reg_dst(reg_dst), .ALU_src(ALU_sr
 	.mem_read(mem_read), .mem_write(mem_write), .reg_write(reg_write), .branch(branch), .jump(jump),
 	.jump_and_link(jump_and_link), .jump_reg(jump_reg), .ALU_op(ALU_op));
 
-// change WriteData input, it is just 0 for now
-regfile rf(.ReadData1(read0), .ReadData2(read1), .WriteData(32'b0),
+wire [31:0] pc_no_jump, pc_jump;
+wire [31:0] branch_addr, jump_addr;
+//Muxes to select for pc
+mux2to1 select_branch(.out(pc_no_jump), .address(branch), .input0(pcplus4), .input1(branch_addr));
+mux2to1 select_jump_addr(.out(pc_jump), .address(jump_reg), .input0(jump_addr), .input1(read1));
+mux2to1 select_jump(.out(pc), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
+
+wire[31:0] wd, exec_result, wb_result;
+
+regfile rf(.ReadData1(read1), .ReadData2(read2), .WriteData(wd),
 	.ReadRegister1(Rs), .ReadRegister2(Rt), .WriteRegister(Rd), .RegWrite(reg_write), .Clk(clk));
 
-// initialize execute phase
+//select what to write into register
+mux2to1 select_wd(.out(wd), .address(jump_and_link), .input0(wb_result), .input1(pcplus4));
 
+//select write register : CHECK BACK for order
+mux2to1 select_wa(.out(Rd), .address(reg_dst), .input0(Rt), .input1(Rd));
+
+// initialize execute phase
 // lw components
-wire [31:0] signextendimm_lw, ALUresult_lw;
+wire [31:0] signextendimm;
 wire alu1_carryout, alu1_zero, alu1_overflow;
 
-signextend se1(.num(imm), .result(signextendimm_lw));
+signextend se1(.num(imm), .result(signextendimm));
 
-ALU alu1(.result(ALUresult_lw), .carryout(alu1_carryout), .zero(alu1_zero), .overflow(alu1_overflow),
-	.operandA(read0), .operandB(read1), .command(ALU_op));
+wire [31:0] operand2;
+ALU alu_exec(.result(exec_result), .carryout(alu1_carryout), .zero(alu1_zero), .overflow(alu1_overflow),
+	.operandA(read1), .operandB(operand2), .command(ALU_op));
 
-datamemory #(32, 2, ) dm(.clk(clk), )
+mux2to1 select_operand2(.out(operand2), .address(ALU_src), .input0(read2), .input1(signextendimm));
+
+wire [31:0] readData;
+datamemory (.clk(clk), .dataOut(readData), .address(exec_result[13:2]), .writeEnable(mem_write), .dataIn(read2));
+
+mux2to1 select_WB(.out(wb_result), .address(mem_read), .input0(exec_result), .input1(readData));
+
+wire alu2_carryout, alu2_zero, alu2_overflow;
+ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
+	.operandA({2'b0, signextendimm[31:2]}), .operandB(operand2), .command(ALU_op));
 
 endmodule
