@@ -68,7 +68,7 @@ wire [31:0] pc_no_jump, pc_jump;
 wire [31:0] branch_addr, jump_addr;
 //Muxes to select for pc
 mux2to1 select_branch(.out(pc_no_jump), .address(branch), .input0(pcplus4), .input1(branch_addr));
-mux2to1 select_jump_addr(.out(pc_jump), .address(jump_reg), .input0(jump_addr), .input1(read1));
+mux2to1 select_jump_addr(.out(pc_jump), .address(jump_reg), .input0({jump_addr[23:0], 2'b0}), .input1(read1));
 mux2to1 select_jump(.out(pc), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
 
 wire[31:0] wd, exec_result, wb_result;
@@ -102,6 +102,6 @@ mux2to1 select_WB(.out(wb_result), .address(mem_read), .input0(exec_result), .in
 
 wire alu2_carryout, alu2_zero, alu2_overflow;
 ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
-	.operandA({2'b0, signextendimm[31:2]}), .operandB(operand2), .command(ALU_op));
+	.operandA({signextendimm[29:0], 2'b0}), .operandB(operand2), .command(ALU_op));
 
 endmodule
