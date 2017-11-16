@@ -15,7 +15,8 @@
 
 module CPU
 (
-	input clk
+	input clk,
+	input reset
 	//output [31:0] instruction
 );
 
