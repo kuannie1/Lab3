@@ -12,8 +12,8 @@ module instructionmemory
   
   reg [31:0] mem[4095:0];  
   
-  // change filename based on assembly .dat file
-  initial $readmemh("file.dat", mem);
+  // change filename based on assembly .text file
+  initial $readmemh("file.text", mem);
     
   assign DataOut = mem[Addr];
 endmodule
