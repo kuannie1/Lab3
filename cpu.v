@@ -25,6 +25,8 @@ wire [31:0] pc;
 wire [31:0] pcplus4; //The next instruction
 wire [31:0] pc_out;
 
+assign pc = 32'b0; 
+
 wire alu0_carryout, alu0_zero, alu0_overflow;
 
 // initialize IF phase
@@ -37,8 +39,8 @@ ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overf
 	.operandA(pc), .operandB(32'd4), .command(3'd0));
 
 wire [31:0] instruction;
-instructionmemory im(.clk(clk), .Addr(pc[11:2]), .DataOut(instruction));
-
+// instructionmemory im(.clk(clk), .Addr(pc_out[11:2]), .DataOut(instruction));
+instructionmemory im(.clk(clk), .Addr(10'b0), .DataOut(instruction));
 // initialize instruction decode phase
 wire [5:0]	op_code, func;
 wire [4:0]	Rs, Rt, Rd;

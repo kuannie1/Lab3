@@ -11,7 +11,7 @@ module cpu_test ();
 
     // Clock generation
     initial clk=0;
-    always #10 clk = !clk;
+    always #100 clk = !clk;
 
     // Instantiate fake CPU
     CPU cpu(.clk(clk), .reset(reset));
@@ -37,7 +37,7 @@ module cpu_test ();
 
 
         // Load CPU memory from (assembly) dump file
-	$readmemh(mem_fn, cpu.im.mem);
+	// $readmemh("mem_fn", cpu.im.mem);
         // Alternate: Explicitly state which array element range to read into
         //$readmemh("mymem.hex", memory, 10, 80);
 	
@@ -55,9 +55,10 @@ module cpu_test ();
 	// Note: I'm just dumping instruction bits, but you can do some
 	// self-checking test cases based on your CPU and program and
 	// automatically report the results.
+	// $display("mem_fn %h", mem_fn);
 	$display("Time | PC       | Instruction");
 	repeat(3) begin
-        $display("%4t | %h | %h", $time, cpu.pc, cpu.op_code); #20 ;
+        $display("%4t | %h | %h", $time, cpu.pc, cpu.instruction); #2000 ;
         end
 	$display("... more execution (see waveform)");
     

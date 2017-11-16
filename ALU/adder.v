@@ -72,7 +72,7 @@ module FullAdder32bit
 );
     wire[6:0] carry; // The only additional wires connect the FullAdder components, carryout to carryin.
     wire[6:0] over; // never gets used, only there to make the program run
-    FullAdder4bit add0 (sum[3:0], carry[0], over[0], a[3:0], b[3:0], 0); // First adder will not have a carry in.
+    FullAdder4bit add0 (sum[3:0], carry[0], over[0], a[3:0], b[3:0], 1'b0); // First adder will not have a carry in.
     FullAdder4bit add1 (sum[7:4], carry[1], over[1], a[7:4], b[7:4], carry[0]);
     FullAdder4bit add2 (sum[11:8], carry[2], over[2], a[11:8], b[11:8], carry[1]);
     FullAdder4bit add3 (sum[15:12], carry[3], over[3], a[15:12], b[15:12], carry[2]); // Final adder has the last carryout 
