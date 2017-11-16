@@ -16,7 +16,7 @@ module mux32to1by1(
 endmodule
 
 module mux2to1(
-  output      outputofmux,
+  output [31:0]     outputofmux,
   input       address,
   input[31:0] input0, input1
 );
