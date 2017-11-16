@@ -9,38 +9,38 @@
 `include "instructiondecode.v"
 `include "controlLUT.v"
 `include "regfile.v"
-`include "datamemory.v"
+`include "SPI/datamemory.v"
 
 
 module CPU
 (
 	input clk,
 	input [15:0] pc,
-	output [31:0] instruction	// double check what this is, double check size
+	output [31:0] instruction	// this is the 32 bit instruction: 1 and 0s that need to be decoded
 );
 
-wire pc_signextend;
-wire [31:0] pcplus4;
+//wire [15:0] pc_signextend; //What's this? do we need this
+wire [15:0] pcplus4; //The next instsructure
 
-wire [4:0] branch,
+wire [4:0] branch; //what's this?
 
 wire alu0_carryout, alu0_zero, alu0_overflow;
 
 // initialize IF phase
 
-signextend se0(.num(pc), .result(pc_signextend));
+//signextend se0(.num(pc), .result(pc_signextend)); //why do we need this? is pc not always positive?
 
 dff #(16) dflipflop(.clk(clk), .we(1'b1), .dataIn(pc_signextend), .dataOut(pc_signextend));
 
 ALU alu0(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
-	.operandA(pc_signextend), .operandB(32'd4), .command(3'd0));
+	.operandA(pc), .operandB(32'd4), .command(3'd0));
 
 // control logic for selecting pc vs pc + 4 ???
-mux2to1 mux0(.out(pc_signextend), .address(branch), .input0(pcplus4), .input0(pc_signextend));
+mux2to1 mux0(.out(pc_signextend), .address(branch), .input0(pcplus4), .input1(pc));
 
 // 	ERROR: ADDR IS ONLY 10 BITS
 // FIX
-instructionmemory im(.clk(clk), .Addr(pc_signextend), .DataOut(instruction));
+instructionmemory im(.clk(clk), .Addr(pc), .DataOut(instruction));
 
 // initialize instruction decode phase
 
