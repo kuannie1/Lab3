@@ -76,7 +76,7 @@ regfile rf(.ReadData1(read1), .ReadData2(read2), .WriteData(wd),
 mux2to1 select_wd(.outputofmux(wd), .address(jump_and_link), .input0(wb_result), .input1(pcplus4));
 
 //select write register : CHECK BACK for order
-mux2to1 select_wa(.outputofmux(Rd), .address(reg_dst), .input0(Rt), .input1(Rd));
+mux2to1_5bit select_wa(.outputofmux(Rd), .address(reg_dst), .input0(Rt), .input1(Rd));
 
 // initialize execute phase
 // lw components

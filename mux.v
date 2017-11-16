@@ -27,6 +27,19 @@ module mux2to1(
   
 endmodule
 
+
+module mux2to1_5bit(
+  output [4:0]     outputofmux,
+  input       address,
+  input[4:0] input0, input1
+);
+  wire[4:0] mux[1:0]; // create 2D array of wires
+  assign mux[0] = input0;
+  assign mux[1] = input1;
+  assign outputofmux=mux[address];
+  
+endmodule
+
 module mux32to1by32(
 	output[31:0]  out,
 	input[4:0]    address,
