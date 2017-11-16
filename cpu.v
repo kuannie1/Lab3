@@ -14,13 +14,13 @@
 
 module CPU
 (
-	input clk,
-	input [31:0] pc,
-	output [31:0] instruction	// 
+	input clk
+	//output [31:0] instruction
 );
 
 //wire [15:0] pc_signextend; //What's this? do we need this
-wire [31:0] pcplus4; //The next instsructure
+wire [31:0] pc;
+wire [31:0] pcplus4; //The next instruction
 wire [31:0] pc_out;
 wire [4:0] branch; //what's this?
 
