@@ -26,9 +26,12 @@ wire [31:0] pc;
 wire [31:0] pcplus4; //The next instruction
 wire [31:0] pc_out;
 
-assign pc = 32'b0; // still need to make this a reg
+// check if this works
+// initial begin
+// 	pc = 32'b0; // still need to make this a reg
+// end
 
-// assign pc = 32'b0; 
+assign pc = 32'b0; 
 
 wire alu0_carryout, alu0_zero, alu0_overflow;
 
@@ -82,6 +85,8 @@ assign jump_addr = target;
 // change name of pc_no_jump to be more appropriate
 mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch), .input0(pcplus4), .input1(branch_addr));
 mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jump_addr[29:0], 2'b0}), .input1(read1));
+
+// change the mux? is there an easier way?
 // mux2to1 select_jump(.outputofmux(pc), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
 
 // remove/fix

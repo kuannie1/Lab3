@@ -57,9 +57,9 @@ module cpu_test ();
 	// Note: I'm just dumping instruction bits, but you can do some
 	// self-checking test cases based on your CPU and program and
 	// automatically report the results.
-	$display("Time | exec_result       | ALU_op"); #300
+	$display("Time | pc       | ALU_op"); #300
 	repeat(10) begin
-        $display("%4t | %b | %h", $time, cpu.exec_result, cpu.ALU_op); #20 ;
+        $display("%4t | %b | %h", $time, cpu.pc, cpu.ALU_op); #20 ;
         end
 	$display("... more execution (see waveform)");
     

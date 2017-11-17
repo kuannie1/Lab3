@@ -27,6 +27,22 @@ module mux2to1(
   
 endmodule
 
+module mux2to1reg(
+  output reg [31:0]     outputofmux,
+  input       address,
+  input[31:0] input0, input1
+);
+  wire[31:0] mux[1:0]; // create 2D array of wires
+  assign mux[0] = input0;
+  assign mux[1] = input1;
+
+  // is it incorrect to use the initial begin?
+  initial begin
+    outputofmux = mux[address];
+  end
+  
+endmodule
+
 
 module mux2to1_5bit(
   output [4:0]     outputofmux,
