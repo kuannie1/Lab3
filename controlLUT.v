@@ -8,6 +8,9 @@
 	reg_write: write enable for register
 	branch: is there a branch needed
 	jump: is there a jump needed
+	jump_and_link: is there a jump and link needed
+	jump_reg: is there a jump register needed
+	ALU_op: selecting the appropriate ALU operation
 */
 
 module controlLUT 
@@ -34,6 +37,14 @@ module controlLUT
 	localparam SLT = 6'h2a;
 	localparam JR = 6'h08;
 
+	// ALU ops
+	localparam opNONE = 3'bx;
+	localparam opADD = 3'd0;
+	localparam opSUB = 3'd1;
+	localparam opXOR = 3'd2;
+	localparam opSLT = 3'd3;
+	localparam opCNE = 3'd4;
+
 
 	always @(op_code || func) begin
 
@@ -50,7 +61,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 3'bx;
+				ALU_op <= opNONE;
 			end
 
 			SW: begin
@@ -64,7 +75,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 3'bx;
+				ALU_op <= opNONE;
 			end
 
 			J: begin
@@ -78,7 +89,7 @@ module controlLUT
 				jump <= 1;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 3'bx;
+				ALU_op <= opNONE;
 			end
 
 			JAL: begin
@@ -92,7 +103,7 @@ module controlLUT
 				jump <= 1;
 				jump_and_link <= 1;
 				jump_reg <= 0;
-				ALU_op <= 3'bx;
+				ALU_op <= opNONE;
 			end
 
 			BNE: begin
@@ -106,7 +117,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 3'd1; //SUB
+				ALU_op <= opCNE;
 			end
 
 			XORI: begin
@@ -120,7 +131,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 3'd6; //XOR
+				ALU_op <= opXOR;
 			end
 
 			ADDI: begin
@@ -134,7 +145,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= 3'd0; //ADD
+				ALU_op <= opADD;
 			end
 			
 			FUNCT:
@@ -151,7 +162,7 @@ module controlLUT
 						jump <= 0;
 						jump_and_link <= 0;
 						jump_reg <= 0;
-						ALU_op <= 3'd0; //ADD
+						ALU_op <= opADD;
 					end
 
 					SUB: begin
@@ -165,7 +176,7 @@ module controlLUT
 						jump <= 0;
 						jump_and_link <= 0;
 						jump_reg <= 0;
-						ALU_op <= 3'd1; //SUB
+						ALU_op <= opSUB;
 
 					end
 
@@ -180,7 +191,7 @@ module controlLUT
 						jump <= 0;
 						jump_and_link <= 0;
 						jump_reg <= 0;
-						ALU_op <= 3'd7; //SLT
+						ALU_op <= opSLT;
 					end
 
 					JR: begin
@@ -191,10 +202,10 @@ module controlLUT
 						mem_write <= 0;
 						reg_write <= 0;
 						branch <= 0;
-						jump <= 0;
+						jump <= 1;
 						jump_and_link <= 0;
 						jump_reg <= 1;
-						ALU_op <= 3'bx; 
+						ALU_op <= opNONE; 
 					end
 
 					// just in case - everything zero!
@@ -209,7 +220,7 @@ module controlLUT
 						jump <= 0;
 						jump_and_link <= 0;
 						jump_reg <= 0;
-						ALU_op <= 0; 
+						ALU_op <= opNONE; 
 					end
 
 				endcase
@@ -226,7 +237,7 @@ module controlLUT
 					jump <= 0;
 					jump_and_link <= 0;
 					jump_reg <= 0;
-					ALU_op <= 0; 
+					ALU_op <= opNONE; 
 				end
 
 		endcase
