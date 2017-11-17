@@ -59,7 +59,7 @@ module cpu_test ();
 	// automatically report the results.
 	$display("Time | pc       | ALU_op"); #300
 	repeat(10) begin
-        $display("%4t | %b | %h", $time, cpu.pc, cpu.instruction); #20 ;
+        $display("%4t | %b | %h", $time, cpu.pc_out, cpu.instruction); #20 ;
         end
 	$display("... more execution (see waveform)");
     

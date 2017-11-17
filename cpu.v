@@ -22,17 +22,17 @@ module CPU
 );
 
 //wire [15:0] pc_signextend; //What's this? do we need this
-reg [31:0] pc;
-wire [31:0] wire_pc;
+// reg [31:0] pc;
+wire [31:0] pc_next;
 wire [31:0] pcplus4; //The next instruction
-wire [31:0] pc_out;
+reg [31:0] pc_out;
 
 //initialize pc to 0
-initial begin pc = 32'b0; end
+initial begin pc_out = 32'b0; end
 
 always @(posedge clk) begin
-	if (wire_pc) begin
-		pc <= wire_pc;
+	if (pc_next) begin
+		pc_out <= pc_next;
 	end
 end
 
@@ -42,8 +42,7 @@ wire alu0_carryout, alu0_zero, alu0_overflow;
 
 //signextend se0(.num(pc), .result(pc_signextend)); //why do we need this? is pc not always positive?
 
-dff #(32) dflipflop(.clk(clk), .we(1'b1), .dataIn(pc), .dataOut(pc_out));
-
+// Replace with behavioral adder later
 ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
 	.operandA(pc_out), .operandB(32'd4), .command(3'd0));
 // weird delay on pcplus4 --> fixing the issue?
@@ -90,7 +89,7 @@ mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch), .input0(pcplus
 mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jump_addr[29:0], 2'b0}), .input1(read1));
 
 // change the mux? is there an easier way?
-mux2to1 select_jump(.outputofmux(wire_pc), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
+mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
 
 wire[31:0] wd, exec_result, wb_result;
 
