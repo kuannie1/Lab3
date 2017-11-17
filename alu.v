@@ -41,8 +41,8 @@ zero_check zcheck_add(add_zero, add_out);
 zero_check zcheck_sub(sub_zero, sub_out);
 
 
-always @(command or operandA or operandB) begin
-#2500
+always @(add_out or sub_out or xor_out or slt_out or isNotEqual) begin
+// #2500
 	case(command) 
 		`opADD: begin
 			result = add_out;

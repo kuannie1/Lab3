@@ -7,19 +7,17 @@
 //------------------------------------------------------------------------
 
 module dff
-#(parameter width = 8)
 (
-input               clk,                // FPGA Clock
-input               we,					// write enable
-input  [width-1:0]  dataIn,     // Load shift reg in parallel
-output [width-1:0]  dataOut     // Shift reg data contents
+   	input clk,
+    input we,
+    input [31:0] dataIn,
+    output reg [31:0] dataOut
 );
 
-    reg [width-1:0]      mem;
     always @(posedge clk) begin
-        if (we == 1)
-            mem <= dataIn;
+        if(we) begin
+            dataOut <= dataIn;
+        end
     end
-    assign dataOut = mem[width-1:0];
 
 endmodule
