@@ -24,20 +24,6 @@ module cpu_test ();
     initial begin
 
     // pc = 32'b0; #1000
-
-	// Get command line arguments for memory image and VCD dump file
-	//   http://iverilog.wikia.com/wiki/Simulation
-	//   http://www.project-veripage.com/plusarg.php
-	// if (! $value$plusargs("mem_fn=%s", mem_fn)) begin
-	//     $display("ERROR: provide +mem_fn=[path to memory image] argument");
-	//     $finish();
- //        end
-	// if (! $value$plusargs("dump_fn=%s", dump_fn)) begin
-	//     $display("ERROR: provide +dump_fn=[path for VCD dump] argument");
-	//     $finish();
- //        end`
-
-
         // Load CPU memory from (assembly) dump file
 	$readmemh(mem_fn, cpu.im.mem);
         // Alternate: Explicitly state which array element range to read into
@@ -49,17 +35,14 @@ module cpu_test ();
 	$dumpvars();
 
 	// Assert reset pulse
-	reset = 0; #10;
-	reset = 1; #10;
-	reset = 0; #10;
+	// reset = 0; #10;
+	// reset = 1; #10;
+	// reset = 0; #10;
 
 	// Display a few cycles just for quick checking
-	// Note: I'm just dumping instruction bits, but you can do some
-	// self-checking test cases based on your CPU and program and
-	// automatically report the results.
-	$display("Time | pc       | ALU_op"); #300
+	$display("Time | pc       | ALU_op");
 	repeat(10) begin
-        $display("%4t | %b | %h", $time, cpu.pc_out, cpu.instruction); #100 ;
+        $display("%4t | %b | %h", $time, cpu.pc_out, cpu.instruction); #20 ;
         end
 	$display("... more execution (see waveform)");
     
