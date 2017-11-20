@@ -1,21 +1,21 @@
 `include "cpu.v"
 
 //------------------------------------------------------------------------
-// simple CPU testbench
+// Simple fake CPU testbench sequence
 //------------------------------------------------------------------------
 
 module cpu_test ();
 
     reg clk;
     reg reset;
+    reg [31:0] pc;
 
     // Clock generation
     initial clk=0;
-    always #100 clk = !clk;
+    always #10 clk = !clk;
 
     // Instantiate fake CPU
     CPU cpu(.clk(clk), .reset(reset));
-
 
     reg [1023:0] mem_fn;
     reg [1023:0] dump_fn;
@@ -23,42 +23,26 @@ module cpu_test ();
     // Test sequence
     initial begin
 
-	// Get command line arguments for memory image and VCD dump file
-	//   http://iverilog.wikia.com/wiki/Simulation
-	//   http://www.project-veripage.com/plusarg.php
-	/*if (! $value$plusargs("mem_fn=%s", mem_fn)) begin
-	    $display("ERROR: provide +mem_fn=[path to memory image] argument");
-	    $finish();
-        end
-	if (! $value$plusargs("dump_fn=%s", dump_fn)) begin
-	    $display("ERROR: provide +dump_fn=[path for VCD dump] argument");
-	    $finish();
-        end */
-
-
+    // pc = 32'b0; #1000
         // Load CPU memory from (assembly) dump file
-	// $readmemh("mem_fn", cpu.im.mem);
+	$readmemh(mem_fn, cpu.im.mem);
         // Alternate: Explicitly state which array element range to read into
-        //$readmemh("mymem.hex", memory, 10, 80);
+        // $readmemh("mymem.hex", memory);
 	
 	// Dump waveforms to file
 	// Note: arrays (e.g. memory) are not dumped by default
-	$dumpfile(dump_fn);
+	$dumpfile("cpu.vcd");
 	$dumpvars();
 
 	// Assert reset pulse
-	reset = 0; #10;
-	reset = 1; #10;
-	reset = 0; #10;
+	// reset = 0; #10;
+	// reset = 1; #10;
+	// reset = 0; #10;
 
 	// Display a few cycles just for quick checking
-	// Note: I'm just dumping instruction bits, but you can do some
-	// self-checking test cases based on your CPU and program and
-	// automatically report the results.
-	// $display("mem_fn %h", mem_fn);
-	$display("Time | PC       | Instruction");
-	repeat(3) begin
-        $display("%4t | %h | %h", $time, cpu.pc, cpu.instruction); #2000 ;
+	$display("Time | pc       | ALU_op");
+	repeat(10) begin
+        $display("%4t | %b | %h", $time, cpu.pc_out, cpu.instruction); #20 ;
         end
 	$display("... more execution (see waveform)");
     
@@ -69,3 +53,5 @@ module cpu_test ();
     end
 
 endmodule
+
+

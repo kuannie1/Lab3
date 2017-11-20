@@ -17,33 +17,28 @@ module CPU
 (
 	input clk,
 	input reset
-	// input [31:0] pc
-	//output [31:0] instruction
 );
 
-//wire [15:0] pc_signextend; //What's this? do we need this
-wire [31:0] pc;
+wire [31:0] pc_next;
 wire [31:0] pcplus4; //The next instruction
-wire [31:0] pc_out;
+reg [31:0] pc_out;
 
-// check if this works
-// initial begin
-// 	pc = 32'b0; // still need to make this a reg
-// end
 
-assign pc = 32'b0; 
+initial begin pc_out = 32'b0; end //initialize pc to 0
+
+always @(posedge clk) begin
+	if (pc_next) begin
+		pc_out <= pc_next;
+	end
+end
 
 wire alu0_carryout, alu0_zero, alu0_overflow;
 
 // initialize IF phase
-
-//signextend se0(.num(pc), .result(pc_signextend)); //why do we need this? is pc not always positive?
-
-dff #(32) dflipflop(.clk(clk), .we(1'b1), .dataIn(pc), .dataOut(pc_out));
-
-ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
-	.operandA(pc_out), .operandB(32'd4), .command(3'd0));
-// weird delay on pcplus4 --> fixing the issue?
+// Replace with behavioral adder later
+//ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
+	//.operandA(pc_out), .operandB(32'd4), .command(3'd0));
+assign pcplus4 = pc_out + 4;
 
 wire [31:0] instruction;
 
@@ -87,15 +82,7 @@ mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch), .input0(pcplus
 mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jump_addr[29:0], 2'b0}), .input1(read1));
 
 // change the mux? is there an easier way?
-// mux2to1 select_jump(.outputofmux(pc), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
-
-// remove/fix
-wire [31:0] temppc;
-mux2to1 select_jump(.outputofmux(temppc), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
-
-// better way
-// assign pc = temppc;
-// need to figure out a way to use pc instead . . .
+mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
 
 wire[31:0] wd, exec_result, wb_result;
 
@@ -131,7 +118,7 @@ mux2to1 select_WB(.outputofmux(wb_result), .address(mem_read), .input0(exec_resu
 
 wire alu2_carryout, alu2_zero, alu2_overflow;
 
-// ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
-// 	.operandA({signextendimm[29:0], 2'b0}), .operandB(operand2), .command(ALU_op));
+ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
+	.operandA({signextendimm[29:0], 2'b0}), .operandB(operand2), .command(ALU_op));
 
 endmodule
