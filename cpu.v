@@ -40,11 +40,10 @@ wire alu0_carryout, alu0_zero, alu0_overflow;
 
 // initialize IF phase
 
-//signextend se0(.num(pc), .result(pc_signextend)); //why do we need this? is pc not always positive?
-
 // Replace with behavioral adder later
-ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
-	.operandA(pc_out), .operandB(32'd4), .command(3'd0));
+//ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
+	//.operandA(pc_out), .operandB(32'd4), .command(3'd0));
+assign pcplus4 = pc_out + 4;
 // weird delay on pcplus4 --> fixing the issue?
 
 wire [31:0] instruction;
