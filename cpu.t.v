@@ -1,7 +1,7 @@
 `include "cpu.v"
 
 //------------------------------------------------------------------------
-// Simple fake CPU testbench sequence
+// Simple CPU testbench sequence
 //------------------------------------------------------------------------
 
 module cpu_test ();
@@ -12,7 +12,7 @@ module cpu_test ();
 
     // Clock generation
     initial clk=0;
-    always #10 clk = !clk;
+    always #200 clk = !clk;
 
     // Instantiate fake CPU
     CPU cpu(.clk(clk), .reset(reset));
@@ -34,15 +34,11 @@ module cpu_test ();
 	$dumpfile("cpu.vcd");
 	$dumpvars();
 
-	// Assert reset pulse
-	// reset = 0; #10;
-	// reset = 1; #10;
-	// reset = 0; #10;
 
 	// Display a few cycles just for quick checking
 	$display("Time | pc       | ALU_op");
 	repeat(10) begin
-        $display("%4t | %b | %h", $time, cpu.pc_out, cpu.instruction); #20 ;
+        $display("%4t | %b | %h", $time, cpu.pc_out, cpu.instruction); #400 ;
         end
 	$display("... more execution (see waveform)");
     

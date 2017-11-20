@@ -4,7 +4,6 @@
 
 `include "SPI/dff.v"
 `include "alu.v"
-// `include "mux.v"
 `include "instructionmemory.v"
 `include "instructiondecode.v"
 `include "controlLUT.v"
@@ -72,9 +71,6 @@ wire [31:0] branch_addr, jump_addr;
 
 // clean this up so we don't have extra variables . . . also probably can't just assign jump_addr
 assign jump_addr = target;
-
-// remove later
-// assign branch_addr = 32'b0;
 
 //Muxes to select for pc
 // change name of pc_no_jump to be more appropriate
