@@ -12,7 +12,7 @@ module cpu_test ();
 
     // Clock generation
     initial clk=0;
-    always #10 clk = !clk;
+    always #100 clk = !clk;
 
     // Instantiate fake CPU
     CPU cpu(.clk(clk), .reset(reset));

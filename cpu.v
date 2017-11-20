@@ -17,18 +17,14 @@ module CPU
 (
 	input clk,
 	input reset
-	// input [31:0] pc
-	//output [31:0] instruction
 );
 
-//wire [15:0] pc_signextend; //What's this? do we need this
-// reg [31:0] pc;
 wire [31:0] pc_next;
 wire [31:0] pcplus4; //The next instruction
 reg [31:0] pc_out;
 
-//initialize pc to 0
-initial begin pc_out = 32'b0; end
+
+initial begin pc_out = 32'b0; end //initialize pc to 0
 
 always @(posedge clk) begin
 	if (pc_next) begin
@@ -39,12 +35,10 @@ end
 wire alu0_carryout, alu0_zero, alu0_overflow;
 
 // initialize IF phase
-
 // Replace with behavioral adder later
 //ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
 	//.operandA(pc_out), .operandB(32'd4), .command(3'd0));
 assign pcplus4 = pc_out + 4;
-// weird delay on pcplus4 --> fixing the issue?
 
 wire [31:0] instruction;
 
