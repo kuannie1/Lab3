@@ -27,8 +27,6 @@ bne 	$t1, 0, reassignA3	# if $t1 isn't equal to 0, then a3 is smaller than t0, s
 j 	breakloop
 
 
-
-
 reassignA1:
 addi 	$t0, $a1, 0		# SMALLEST element. Updated to a1 instead
 slt	$t1, $t0, $a2		# see if the third element is smaller than the second element
@@ -42,17 +40,12 @@ bne 	$t1, 0, reassignA3	# if $t1 isn't equal to 0, then a3 is smaller than t0, s
 j	breakloop
 
 
-
-
 reassignA2:
 addi 	$t0, $a2, 0		# SMALLEST element. Updated to a2 instead
 slt	$t1, $t0, $a3		# see if the fourth element is smaller than the second element
 bne 	$t1, 0, reassignA3	# if $t1 isn't equal to 0, then a3 is smaller than t0, so we need to reassign t0
 
 # if a2 made it this far, break the loop
-
-
-
 
 
 reassignA3:
