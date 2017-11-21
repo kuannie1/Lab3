@@ -22,21 +22,23 @@ module cpu_test ();
 
     // Test sequence
     initial begin
+    // Dump waveforms to file
+    // Note: arrays (e.g. memory) are not dumped by default
+    $dumpfile("cpu.vcd");
+    $dumpvars();
+
 
     // Load CPU memory from (assembly) dump file
-	$readmemh(mem_fn, cpu.im.mem);
+	$readmemh(mem_fn, cpu.im.mem); #200;
 	
-	// Dump waveforms to file
-	// Note: arrays (e.g. memory) are not dumped by default
-	$dumpfile("cpu.vcd");
-	$dumpvars();
+	
 
 
 	// Display a few cycles just for quick checking
 	$display("Time | pc                               | instruction                         | ALU Op Code      |       Rs       | Rt     | Rd  ");
 	repeat(10) begin
 
-        $display("%4t | %b | %b    |  %b             |      %b     | %b  | %b", $time, cpu.pc_out, cpu.instruction, cpu.ALU_op, cpu.Rs, cpu.Rt, cpu.Rd); #200;
+        $display("%4t | %b | %b    |  %b             |      %b     | %b  | %b", $time, cpu.pc_out, cpu.instruction, cpu.ALU_op, cpu.Rs, cpu.Rt, cpu.Rd); #400;
         end
 	$display("... more execution (see waveform)");   
 
