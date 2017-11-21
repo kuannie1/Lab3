@@ -46,7 +46,7 @@ module cpu_test ();
     // End execution after some time delay - adjust to match your program
     // or use a smarter approach like looking for an exit syscall or the
     // PC to be the value of the last instruction in your program.
-    #2000 $finish();
+    #8000 $finish();
     end
 
 endmodule
