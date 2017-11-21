@@ -14,7 +14,7 @@ module cpu_test ();
     initial clk=0;
     always #200 clk = !clk;
 
-    // Instantiate CPU
+    // Instantiate fake CPU
     CPU cpu(.clk(clk), .reset(reset));
 
     reg [1023:0] mem_fn;
@@ -23,11 +23,8 @@ module cpu_test ();
     // Test sequence
     initial begin
 
-    // pc = 32'b0; #1000
-        // Load CPU memory from (assembly) dump file
+    // Load CPU memory from (assembly) dump file
 	$readmemh(mem_fn, cpu.im.mem);
-        // Alternate: Explicitly state which array element range to read into
-        // $readmemh("mymem.hex", memory);
 	
 	// Dump waveforms to file
 	// Note: arrays (e.g. memory) are not dumped by default
@@ -35,17 +32,14 @@ module cpu_test ();
 	$dumpvars();
 
 
-// Assert reset pulse
-    reset = 0; #10;
-    reset = 1; #10;
-    reset = 0; #10;
-
 	// Display a few cycles just for quick checking
-	$display("Time | pc       | ALU_op");
+	$display("Time | pc                               | instruction                         | ALU Op Code      |       Rs       | Rt     | Rd  ");
 	repeat(10) begin
-        $display("%4t | %b | %h", $time, cpu.pc_out, cpu.instruction); #400 ;
+
+        $display("%4t | %b | %b    |  %b             |      %b     | %b  | %b", $time, cpu.pc_out, cpu.instruction, cpu.ALU_op, cpu.Rs, cpu.Rt, cpu.Rd); #200;
         end
-	$display("... more execution (see waveform)");
+	$display("... more execution (see waveform)");   
+
     
 	// End execution after some time delay - adjust to match your program
 	// or use a smarter approach like looking for an exit syscall or the
