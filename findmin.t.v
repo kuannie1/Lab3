@@ -4,14 +4,14 @@
 // Simple CPU testbench sequence
 //------------------------------------------------------------------------
 
-module cpu_test ();
+module findmin_test ();
 
     reg clk;
     reg reset;
     reg [31:0] pc;
 
     // Clock generation
-    initial clk=0;
+    initial clk=1;
     always #200 clk = !clk;
 
     // Instantiate fake CPU
@@ -24,7 +24,7 @@ module cpu_test ();
     initial begin
     // Dump waveforms to file
     // Note: arrays (e.g. memory) are not dumped by default
-    $dumpfile("cpu.vcd");
+    $dumpfile("findmin.vcd");
     $dumpvars();
 
 
@@ -32,16 +32,15 @@ module cpu_test ();
     $readmemh(mem_fn, cpu.im.mem); #200;
     
     
-
-
     // Display a few cycles just for quick checking
-    $display("Time | pc                               | instruction                         | ALU Op Code      |       Rs       | Rt     | Rd  ");
-    repeat(10) begin
+    $display("Time | pc   | instruction  | Read 1 |   Rs     | Rt   | Rd  | exec result | wb result");
+    repeat(33) begin
 
-        $display("%4t | %b | %b    |  %b             |      %b     | %b  | %b", $time, cpu.pc_out, cpu.instruction, cpu.ALU_op, cpu.Rs, cpu.Rt, cpu.Rd); #400;
+        $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result); #400;
         end
     $display("... more execution (see waveform)");   
 
+    // $display("Mem %d", cpu.datmem.memory[]);
     
     // End execution after some time delay - adjust to match your program
     // or use a smarter approach like looking for an exit syscall or the

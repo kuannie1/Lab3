@@ -13,7 +13,8 @@ module instructionmemory
   reg [31:0] mem[4095:0];  
   
   // change filename based on assembly .text file
-  initial $readmemh("simpleasmtest/addi.txt", mem);
+  // initial $readmemh("simpleasmtest/addi.txt", mem);
+  initial $readmemh("file.text", mem);
   
 
   assign DataOut = mem[Addr];
