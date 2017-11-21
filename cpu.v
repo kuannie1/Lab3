@@ -115,6 +115,6 @@ mux2to1 select_WB(.outputofmux(wb_result), .address(mem_read), .input0(exec_resu
 wire alu2_carryout, alu2_zero, alu2_overflow;
 
 ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
-	.operandA({signextendimm[29:0], 2'b0}), .operandB(operand2), .command(ALU_op));
+	.operandA({signextendimm[29:0], 2'b0}), .operandB(pcplus4), .command(ALU_op));
 
 endmodule

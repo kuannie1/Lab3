@@ -11,8 +11,8 @@ module cpu_test ();
     reg [31:0] pc;
 
     // Clock generation
-    initial clk=0;
-    always #200 clk = !clk;
+    initial clk=1;
+    always #300 clk = !clk;
 
     // Instantiate fake CPU
     CPU cpu(.clk(clk), .reset(reset));
@@ -35,10 +35,10 @@ module cpu_test ();
 
 
     // Display a few cycles just for quick checking
-    $display("Time | pc                               | instruction                         | ALU Op Code      |       Rs       | Rt     | Rd  ");
+    $display("Time | pc   | instruction  | Read 1 |   Rs     | Rt   | Rd  | exec result ");
     repeat(10) begin
 
-        $display("%4t | %b | %b    |  %b             |      %b     | %b  | %b", $time, cpu.pc_out, cpu.instruction, cpu.ALU_op, cpu.Rs, cpu.Rt, cpu.Rd); #400;
+        $display("%4t | %d | %d    |  %d  |   %b    | %b  | %b  | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result); #400;
         end
     $display("... more execution (see waveform)");   
 
