@@ -46,7 +46,7 @@ module controlLUT
 	localparam opCNE = 3'd4;
 
 
-	always @(op_code || func) begin
+	always @(op_code or func) begin
 
 		case(op_code)
 
