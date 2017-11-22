@@ -34,11 +34,14 @@ module add_test ();
     
     // Display a few cycles just for quick checking
     $display("Time | pc   | instruction  | Read 1 |   Rs     | Rt   | Rd  | exec result | wb result");
-    repeat(3) begin
-
-        $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result); #400;
-        end
+    repeat(2) begin
+        $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result);
+        $display("data stored in Rt for addi: %d ", cpu.wd);#400;
+    end
+    $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result); 
+    $display("data stored in reg file to read: : %d, %d ", cpu.read1, cpu.read2); #400;
     $display("... more execution (see waveform)");   
+
 
     // $display("Mem %d", cpu.datmem.memory[]);
     

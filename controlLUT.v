@@ -135,7 +135,7 @@ module controlLUT
 			end
 
 			ADDI: begin
-				reg_dst <= 1;
+				reg_dst <= 0;
 				ALU_src <= 1;
 				mem_to_reg <= 0;
 				mem_read <= 0;

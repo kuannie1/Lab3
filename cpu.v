@@ -82,16 +82,15 @@ mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), 
 
 wire[31:0] wd, exec_result, wb_result;
 
+wire [4:0] Rdtemp;
 regfile rf(.ReadData1(read1), .ReadData2(read2), .WriteData(wd),
-	.ReadRegister1(Rs), .ReadRegister2(Rt), .WriteRegister(Rd), .RegWrite(reg_write), .Clk(clk));
+	.ReadRegister1(Rs), .ReadRegister2(Rt), .WriteRegister(Rdtemp), .RegWrite(reg_write), .Clk(clk));
 
 //select what to write into register
 mux2to1 select_wd(.outputofmux(wd), .address(jump_and_link), .input0(wb_result), .input1(pcplus4));
 
 //select write register : CHECK BACK for order
-
 // temp variable is fine --> logic issue somewhere else?
-wire [4:0] Rdtemp;
 mux2to1_5bit select_wa(.outputofmux(Rdtemp), .address(reg_dst), .input0(Rt), .input1(Rd));
 
 // initialize execute phase
