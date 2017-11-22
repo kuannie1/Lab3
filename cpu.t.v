@@ -35,7 +35,7 @@ module cpu_test ();
 
 
     // Display a few cycles just for quick checking
-    $display("Time | pc   | instruction  | Read 1 |   Rs     | Rt   | Rd  | exec result ");
+    $display("Time |         pc | instruction   | Read 1       |   Rs       | Rt     | Rd     | exec result ");
     repeat(10) begin
 
         $display("%4t | %d | %d    |  %d  |   %b    | %b  | %b  | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result); #400;
