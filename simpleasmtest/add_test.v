@@ -1,4 +1,4 @@
-`include "cpu.v"
+`include "./cpu.v"
 
 //------------------------------------------------------------------------
 // Simple CPU testbench sequence
@@ -33,7 +33,7 @@ module add_test ();
     
     
     // Display a few cycles just for quick checking
-    $display("Time | pc   | instruction  | Read 1 |   Rs     | Rt   | Rd  | exec result | wb result");
+    $display("Time | pc         | instruction| Read 1       |   Rs  | Rt     | Rd     | exec result| wb result");
     repeat(2) begin
         $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result);
         $display("data stored in Rt for addi: %d ", cpu.wd);#400;
