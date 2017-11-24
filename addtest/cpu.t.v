@@ -24,7 +24,7 @@ module cpu_test ();
     initial begin
 
     // Load CPU memory from (assembly) dump file
-	$readmemh(mem_fn, cpu.im.mem);
+	$readmemh(mem_fn, cpu.im.mem); #200
 	
 	// Dump waveforms to file
 	// Note: arrays (e.g. memory) are not dumped by default
