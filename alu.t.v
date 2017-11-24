@@ -45,12 +45,7 @@ module alu_test ();
 		$displayb(operandA);
 		$displayb(operandB);
 		$display("result: %b", result);
-		// $displayb("a: 		%b", get_sub_out.add1tob.add4.add1.a);
-		// $displayb("b: 		%b", get_sub_out.add1tob.add4.add1.b);
-		// $displayb("carryin: 	%b", get_sub_out.add1tob.add4.add1.carryin);
-		// $displayb("sum: 		%b", get_sub_out.add1tob.add4.add1.sum);
-		// $displayb("carryout: 	%b", get_sub_out.add1tob.add4.add1.carryout);
-
+		
 		$finish();
 	end
 

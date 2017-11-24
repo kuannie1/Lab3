@@ -1,4 +1,4 @@
-`include "SPI/datamemory.v"
+`include "datamemory.v"
 
 module testDataMemory();
 	reg 		clk;

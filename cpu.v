@@ -2,13 +2,13 @@
 	Top-level module for the CPU.
 */
 
-`include "SPI/dff.v"
+
 `include "alu.v"
 `include "instructionmemory.v"
 `include "instructiondecode.v"
 `include "controlLUT.v"
 `include "regfile.v"
-`include "SPI/datamemory.v"
+`include "datamemory.v"
 `include "signextend.v"
 
 
@@ -35,8 +35,7 @@ wire alu0_carryout, alu0_zero, alu0_overflow;
 
 // initialize IF phase
 // Replace with behavioral adder later
-//ALU alu_pc4(.result(pcplus4), .carryout(alu0_carryout), .zero(alu0_zero), .overflow(alu0_overflow),
-	//.operandA(pc_out), .operandB(32'd4), .command(3'd0));
+
 assign pcplus4 = pc_out + 4;
 
 wire [31:0] instruction;
@@ -89,8 +88,6 @@ regfile rf(.ReadData1(read1), .ReadData2(read2), .WriteData(wd),
 //select what to write into register
 mux2to1 select_wd(.outputofmux(wd), .address(jump_and_link), .input0(wb_result), .input1(pcplus4));
 
-//select write register : CHECK BACK for order
-// temp variable is fine --> logic issue somewhere else?
 mux2to1_5bit select_wa(.outputofmux(Rdtemp), .address(reg_dst), .input0(Rt), .input1(Rd));
 
 // initialize execute phase
