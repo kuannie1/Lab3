@@ -29,24 +29,24 @@ module controlLUT
 	localparam BNE = 6'h5;
 	localparam XORI = 6'he;
 	localparam ADDI = 6'h8;
-	localparam FUNCT = 6'h0;
+	localparam FUNCT = 6'h0; //all zeros
 
 	// FUNCT means that it is an R-Type instruction, must look at func not op_code instead
-	localparam ADD = 6'h20;
+	localparam ADD = 6'h20; //d32: b100000
 	localparam SUB = 6'h22;
 	localparam SLT = 6'h2a;
 	localparam JR = 6'h08;
 
 	// ALU ops
 	localparam opNONE = 3'bx;
-	localparam opADD = 3'd0;
+	localparam opADD = 3'd0; //all zeros
 	localparam opSUB = 3'd1;
 	localparam opXOR = 3'd2;
 	localparam opSLT = 3'd3;
 	localparam opCNE = 3'd4;
 
 
-	always @(op_code || func) begin
+	always @(op_code or func) begin
 
 		case(op_code)
 
@@ -135,7 +135,7 @@ module controlLUT
 			end
 
 			ADDI: begin
-				reg_dst <= 1;
+				reg_dst <= 0;
 				ALU_src <= 1;
 				mem_to_reg <= 0;
 				mem_read <= 0;
@@ -150,7 +150,6 @@ module controlLUT
 			
 			FUNCT:
 				case(func)
-
 					ADD: begin
 						reg_dst <= 1;
 						ALU_src <= 0;

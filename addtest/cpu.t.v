@@ -1,4 +1,4 @@
-`include "cpu.v"
+`include "Lab3/cpu.v"
 
 //------------------------------------------------------------------------
 // Simple CPU testbench sequence
