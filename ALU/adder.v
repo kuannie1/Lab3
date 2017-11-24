@@ -1,5 +1,6 @@
 // ALU -- Adder
 
+
 // define gates with delays
 `define AND and #30
 `define OR or #30
@@ -7,6 +8,46 @@
 `define NAND nand #20
 `define NOR nor #20
 `define XOR xor #30
+
+
+// module not32(
+
+//   output[31:0] out,
+//   input[31:0] a
+// );
+// `NOT get0thbit(out[0],a[0]);
+// `NOT get1thbit(out[1],a[1]);
+// `NOT get2thbit(out[2],a[2]);
+// `NOT get3thbit(out[3],a[3]);
+// `NOT get4thbit(out[4],a[4]);
+// `NOT get5thbit(out[5],a[5]);
+// `NOT get6thbit(out[6],a[6]);
+// `NOT get7thbit(out[7],a[7]);
+// `NOT get8thbit(out[8],a[8]);
+// `NOT get9thbit(out[9],a[9]);
+// `NOT get10thbit(out[10],a[10]);
+// `NOT get11thbit(out[11],a[11]);
+// `NOT get12thbit(out[12],a[12]);
+// `NOT get13thbit(out[13],a[13]);
+// `NOT get14thbit(out[14],a[14]);
+// `NOT get15thbit(out[15],a[15]);
+// `NOT get16thbit(out[16],a[16]);
+// `NOT get17thbit(out[17],a[17]);
+// `NOT get18thbit(out[18],a[18]);
+// `NOT get19thbit(out[19],a[19]);
+// `NOT get20thbit(out[20],a[20]);
+// `NOT get21thbit(out[21],a[21]);
+// `NOT get22thbit(out[22],a[22]);
+// `NOT get23thbit(out[23],a[23]);
+// `NOT get24thbit(out[24],a[24]);
+// `NOT get25thbit(out[25],a[25]);
+// `NOT get26thbit(out[26],a[26]);
+// `NOT get27thbit(out[27],a[27]);
+// `NOT get28thbit(out[28],a[28]);
+// `NOT get29thbit(out[29],a[29]);
+// `NOT get30thbit(out[30],a[30]);
+// `NOT get31thbit(out[31],a[31]);
+// endmodule
 
 
  /* 
@@ -24,13 +65,16 @@ module structuralFullAdder // Full Adder using XOR gates
 );
 
     wire ab; // Calculate the sum
-    `XOR aXORb(ab, a, b);
-    `XOR abXORc(sum, ab, carryin);
+    xor aXORb(ab, a, b);
+    xor abXORc(sum, ab, carryin);
 
     wire aAndb, oneAndC; // Calculate the carryout (if it exists)
-    `AND aANDb(aAndb, a, b);
-    `AND aXORbANDc(oneAndC, ab, carryin);
-    `OR aorborc(carryout, aAndb, oneAndC);
+    and aANDb(aAndb, a, b);
+    and aXORbANDc(oneAndC, ab, carryin);
+    // `OR aorborc(carryout, aAndb, oneAndC);
+    wire notcarryout;
+    or aorborc(carryout, aAndb, oneAndC);
+    // `NOT norgate(carryout, notcarryout);
     
 endmodule
 

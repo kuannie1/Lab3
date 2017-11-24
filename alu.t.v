@@ -1,4 +1,5 @@
-`include "alu.v"
+// `include "alu.v"
+`include "ALU/adder.v"
 
 `define opADD  3'd0
 `define opSUB  3'd1
@@ -16,15 +17,26 @@ module alu_test ();
 	reg [31:0] operandB;
 	reg [2:0] command;
 
-	ALU alu(.result(result), .carryout(carryout), .zero(zero),
-		.overflow(overflow), .operandA(operandA), .operandB(operandB), 
-		.command(command));
+	// ALU alu(.result(result), .carryout(carryout), .zero(zero),
+	// 	.overflow(overflow), .operandA(operandA), .operandB(operandB), 
+	// 	.command(command));
+
+	Subtractor32bit get_sub_out(operandA, operandB, result, carryout, overflow);
+
 
 	initial begin
 		$dumpfile("alu.vcd");
 		$dumpvars();
-		operandA = 32'b1; operandB = 32'b1; command = `opADD; #1000
+		operandA = 32'd20; operandB = 32'd5; command = `opXOR; #1000
+		$displayb(operandA);
+		$displayb(operandB);
 		$displayb(result);
+		// $displayb("a: 		%b", get_sub_out.add1tob.add4.add1.a);
+		// $displayb("b: 		%b", get_sub_out.add1tob.add4.add1.b);
+		// $displayb("carryin: 	%b", get_sub_out.add1tob.add4.add1.carryin);
+		// $displayb("sum: 		%b", get_sub_out.add1tob.add4.add1.sum);
+		// $displayb("carryout: 	%b", get_sub_out.add1tob.add4.add1.carryout);
+		$displayb(get_sub_out.b2comp);
 		$finish();
 	end
 

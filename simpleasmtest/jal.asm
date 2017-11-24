@@ -1,4 +1,4 @@
-# Test JAL instruction
+s# Test JAL instruction
 
 addi $s0, $zero, 2
 
