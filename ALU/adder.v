@@ -1,5 +1,5 @@
 // ALU -- Adder
-
+`include "ALU/logic32bits.v"
 
 // define gates with delays
 `define AND and #30
@@ -8,47 +8,6 @@
 `define NAND nand #20
 `define NOR nor #20
 `define XOR xor #30
-
-
-// module not32(
-
-//   output[31:0] out,
-//   input[31:0] a
-// );
-// `NOT get0thbit(out[0],a[0]);
-// `NOT get1thbit(out[1],a[1]);
-// `NOT get2thbit(out[2],a[2]);
-// `NOT get3thbit(out[3],a[3]);
-// `NOT get4thbit(out[4],a[4]);
-// `NOT get5thbit(out[5],a[5]);
-// `NOT get6thbit(out[6],a[6]);
-// `NOT get7thbit(out[7],a[7]);
-// `NOT get8thbit(out[8],a[8]);
-// `NOT get9thbit(out[9],a[9]);
-// `NOT get10thbit(out[10],a[10]);
-// `NOT get11thbit(out[11],a[11]);
-// `NOT get12thbit(out[12],a[12]);
-// `NOT get13thbit(out[13],a[13]);
-// `NOT get14thbit(out[14],a[14]);
-// `NOT get15thbit(out[15],a[15]);
-// `NOT get16thbit(out[16],a[16]);
-// `NOT get17thbit(out[17],a[17]);
-// `NOT get18thbit(out[18],a[18]);
-// `NOT get19thbit(out[19],a[19]);
-// `NOT get20thbit(out[20],a[20]);
-// `NOT get21thbit(out[21],a[21]);
-// `NOT get22thbit(out[22],a[22]);
-// `NOT get23thbit(out[23],a[23]);
-// `NOT get24thbit(out[24],a[24]);
-// `NOT get25thbit(out[25],a[25]);
-// `NOT get26thbit(out[26],a[26]);
-// `NOT get27thbit(out[27],a[27]);
-// `NOT get28thbit(out[28],a[28]);
-// `NOT get29thbit(out[29],a[29]);
-// `NOT get30thbit(out[30],a[30]);
-// `NOT get31thbit(out[31],a[31]);
-// endmodule
-
 
  /* 
 Module: structuralFullAdder
@@ -98,7 +57,7 @@ module FullAdder4bit
     structuralFullAdder add1 (sum[1], carry1, a[1], b[1], carry0);
     structuralFullAdder add2 (sum[2], carry2, a[2], b[2], carry1);
     structuralFullAdder add3 (sum[3], carryout, a[3], b[3], carry2); // Final adder has the last carryout 
-    `XOR overflowCheck(overflow, carry2, carryout); // Returns 1 if there is overflow by comparing carryin and carryout of last adder
+    xor overflowCheck(overflow, carry2, carryout); // Returns 1 if there is overflow by comparing carryin and carryout of last adder
 endmodule
 
  /* 
@@ -119,13 +78,13 @@ module FullAdder32bit
     FullAdder4bit add0 (sum[3:0], carry[0], over[0], a[3:0], b[3:0], 1'b0); // First adder will not have a carry in.
     FullAdder4bit add1 (sum[7:4], carry[1], over[1], a[7:4], b[7:4], carry[0]);
     FullAdder4bit add2 (sum[11:8], carry[2], over[2], a[11:8], b[11:8], carry[1]);
-    FullAdder4bit add3 (sum[15:12], carry[3], over[3], a[15:12], b[15:12], carry[2]); // Final adder has the last carryout 
-    FullAdder4bit add4 (sum[19:16], carry[4], over[4], a[19:16], b[19:16], carry[3]); // First adder will not have a carry in.
+    FullAdder4bit add3 (sum[15:12], carry[3], over[3], a[15:12], b[15:12], carry[2]); 
+    FullAdder4bit add4 (sum[19:16], carry[4], over[4], a[19:16], b[19:16], carry[3]); 
     FullAdder4bit add5 (sum[23:20], carry[5], over[5], a[23:20], b[23:20], carry[4]);
     FullAdder4bit add6 (sum[27:24], carry[6], over[6], a[27:24], b[27:24], carry[5]);
     FullAdder4bit add7 (sum[31:28], carryout, overflow, a[31:28], b[31:28], carry[6]); // Final adder has the last carryout 
 
-    `XOR overflowCheck(overflow, carry[6], carryout); // Returns 1 if there is overflow by comparing carryin and carryout of last adder
+    xor overflowCheck(overflow, carry[6], carryout); // Returns 1 if there is overflow by comparing carryin and carryout of last adder
 endmodule
 
  /* 
@@ -146,5 +105,5 @@ module Subtractor32bit
   not32 notbgate (notb, b);
   FullAdder32bit add1tob(b2comp, unusedCarryout, invertingOverflow, notb, 32'd1);
   FullAdder32bit getsum(sum, carryout, totalOverflow, a, b2comp);
-  `OR overflowgate(overflow, totalOverflow, invertingOverflow);
+  or overflowgate(overflow, totalOverflow, invertingOverflow);
 endmodule
