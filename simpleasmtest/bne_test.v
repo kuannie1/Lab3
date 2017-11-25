@@ -37,6 +37,7 @@ module bne_test();
     repeat(12) begin
         $display("%4t | %d | %h |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result);
         $display("data stored in Rt for addi: %d ", cpu.wd);#400;
+        $display("branch: %b, exec_result: %b, branch_ctl: %b", cpu.branch, cpu.exec_result, cpu.branch_ctl);
     end
     // $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result); 
     // $display("data stored in reg file to read: %d, %d ", cpu.read1, cpu.read2); 

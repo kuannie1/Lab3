@@ -70,9 +70,13 @@ wire [31:0] branch_addr, jump_addr;
 
 assign jump_addr = target;
 
+wire alu1_carryout, alu1_zero, alu1_overflow;
+
 //Muxes to select for pc
 // change name of pc_no_jump to be more appropriate
-mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch), .input0(pcplus4), .input1(branch_addr));
+wire branch_ctl;
+assign branch_ctl = branch & exec_result[0];
+mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch_ctl), .input0(pcplus4), .input1(branch_addr));
 mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jump_addr[29:0], 2'b0}), .input1(read1));
 
 mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
@@ -94,9 +98,7 @@ mux2to1 select_wd(.outputofmux(wd), .address(jump_and_link), .input0(wb_result),
 mux2to1_5bit select_wa(.outputofmux(Rdtemp), .address(reg_dst), .input0(Rt), .input1(Rd));
 
 // initialize execute phase
-// lw components
 wire [31:0] signextendimm;
-wire alu1_carryout, alu1_zero, alu1_overflow;
 
 signextend se1(.num(imm), .result(signextendimm));
 
