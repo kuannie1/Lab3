@@ -68,7 +68,6 @@ controlLUT cl(.op_code(op_code), .func(func), .reg_dst(reg_dst), .ALU_src(ALU_sr
 wire [31:0] pc_no_jump, pc_jump;
 wire [31:0] branch_addr, jump_addr;
 
-// clean this up so we don't have extra variables . . . also probably can't just assign jump_addr
 assign jump_addr = target;
 
 //Muxes to select for pc
@@ -76,8 +75,12 @@ assign jump_addr = target;
 mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch), .input0(pcplus4), .input1(branch_addr));
 mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jump_addr[29:0], 2'b0}), .input1(read1));
 
-// change the mux? is there an easier way?
 mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
+
+// wire alu2_carryout, alu2_zero, alu2_overflow;
+// ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
+// 	.operandA({signextendimm[29:0], 2'b0}), .operandB(pcplus4), .command(ALU_op));
+assign branch_addr = {signextendimm[29:0], 2'b0} + pcplus4;
 
 wire[31:0] wd, exec_result, wb_result;
 
@@ -110,10 +113,5 @@ wire [31:0] readData;
 datamemory datmem(.clk(clk), .dataOut(readData), .address(exec_result[13:2]), .writeEnable(mem_write), .dataIn(read2));
 
 mux2to1 select_WB(.outputofmux(wb_result), .address(mem_read), .input0(exec_result), .input1(readData));
-
-wire alu2_carryout, alu2_zero, alu2_overflow;
-
-ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
-	.operandA({signextendimm[29:0], 2'b0}), .operandB(pcplus4), .command(ALU_op));
 
 endmodule
