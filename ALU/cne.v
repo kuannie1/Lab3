@@ -1,4 +1,4 @@
-// ALU - Branch if Not Equal (BNE) Feature
+// ALU - Check if Not Equal (CNE) Feature
 
 // define gates with delays
 `define AND and #30
@@ -9,7 +9,7 @@
 `define XOR xor #30
 
  /* 
-Module: BNE
+Module: CNE
 Checks whether a and b are equal by seeing if the xor result is 1. 
 If the result is not all 1s then return all 0s. 
 */

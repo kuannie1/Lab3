@@ -12,7 +12,7 @@ module bne_test();
 
     // Clock generation
     initial clk=1;
-    always #200 clk = !clk;
+    always #150 clk = !clk;
 
     // Instantiate fake CPU
     CPU cpu(.clk(clk), .reset(reset));
@@ -29,14 +29,14 @@ module bne_test();
 
 
     // Load CPU memory from (assembly) dump file
-    $readmemh(mem_fn, cpu.im.mem); #200;
+    $readmemh(mem_fn, cpu.im.mem); #300;
     
     
     // Display a few cycles just for quick checking
     $display("Time | pc   | instruction  | Read 1 |   Rs     | Rt   | Rd  | exec result | wb result");
-    repeat(12) begin
+    repeat(7) begin
         $display("%4t | %d | %h |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result);
-        $display("data stored in Rt for addi: %d ", cpu.wd);#400;
+        $display("data stored in Rt for addi: %d ", cpu.wd);#300;
         $display("branch: %b, exec_result: %b, branch_ctl: %b", cpu.branch, cpu.exec_result, cpu.branch_ctl);
     end
     // $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result); 

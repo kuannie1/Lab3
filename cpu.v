@@ -81,9 +81,6 @@ mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jum
 
 mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
 
-// wire alu2_carryout, alu2_zero, alu2_overflow;
-// ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
-// 	.operandA({signextendimm[29:0], 2'b0}), .operandB(pcplus4), .command(ALU_op));
 assign branch_addr = {signextendimm[29:0], 2'b0} + pcplus4;
 
 wire[31:0] wd, exec_result, wb_result;
@@ -103,16 +100,19 @@ wire [31:0] signextendimm;
 signextend se1(.num(imm), .result(signextendimm));
 
 wire [31:0] operand2;
-
+// the second operand can be an immediate or directly from the register file
 mux2to1 select_operand2(.outputofmux(operand2), .address(ALU_src), .input0(read2), .input1(signextendimm));
 
+// find the calculated output based on operand1 and the selected operand2
 ALU alu_exec(.result(exec_result), .carryout(alu1_carryout), .zero(alu1_zero), .overflow(alu1_overflow),
 	.operandA(read1), .operandB(operand2), .command(ALU_op));
 
 
 wire [31:0] readData;
 
+// store results into datamemory if needed
 datamemory datmem(.clk(clk), .dataOut(readData), .address(exec_result[13:2]), .writeEnable(mem_write), .dataIn(read2));
+
 
 mux2to1 select_WB(.outputofmux(wb_result), .address(mem_read), .input0(exec_result), .input1(readData));
 

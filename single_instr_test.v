@@ -24,7 +24,7 @@ module instr_test();
     initial begin
     // Dump waveforms to file
     // Note: arrays (e.g. memory) are not dumped by default
-    $dumpfile("j.vcd");
+    $dumpfile("sw.vcd");
     $dumpvars();
 
 

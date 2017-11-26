@@ -17,6 +17,5 @@ module instructionmemory
   initial $readmemh("simpleasmtest/jal.txt", mem);
   // initial $readmemh("file.text", mem);
 
-
   assign DataOut = mem[Addr];
 endmodule

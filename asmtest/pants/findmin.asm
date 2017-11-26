@@ -30,7 +30,7 @@ j 	breakloop
 
 reassignA1:
 addi 	$t0, $a1, 0		# SMALLEST element. Updated to a1 instead
-slt	$t1, $t0, $a2		# see if the third element is smaller than the second element
+slt		$t1, $t0, $a2		# see if the third element is smaller than the second element
 bne 	$t1, 1, reassignA2	# if $t1 isn't equal to 0, then a2 is smaller than t0, so we need to reassign t0
 
 # see if fourth element is smaller than current minimum
