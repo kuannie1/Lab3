@@ -81,9 +81,6 @@ mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jum
 
 mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
 
-// wire alu2_carryout, alu2_zero, alu2_overflow;
-// ALU alu_branch(.result(branch_addr), .overflow(alu2_overflow), .zero(alu2_zero), .carryout(alu2_carryout),
-// 	.operandA({signextendimm[29:0], 2'b0}), .operandB(pcplus4), .command(ALU_op));
 assign branch_addr = {signextendimm[29:0], 2'b0} + pcplus4;
 
 wire[31:0] wd, exec_result, wb_result;
