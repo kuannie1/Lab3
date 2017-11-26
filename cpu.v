@@ -50,7 +50,7 @@ wire [4:0]	shift;
 wire [15:0]	imm;
 wire [25:0]	target;
 //Control signals:
-wire reg_dst, ALU_src, mem_to_reg, mem_read, mem_write, reg_write;
+wire reg_dst, ALU_src, mem_read, mem_write, reg_write;
 wire branch, jump, jump_and_link, jump_reg;
 wire [2:0] ALU_op;
 
@@ -61,7 +61,7 @@ wire [31:0] dm_out;
 instructiondecode id(.instruction(instruction), .op_code(op_code), .func(func), .Rs(Rs), .Rt(Rt), .Rd(Rd),
 	.shift(shift), .imm(imm), .target(target));
 
-controlLUT cl(.op_code(op_code), .func(func), .reg_dst(reg_dst), .ALU_src(ALU_src), .mem_to_reg(mem_to_reg),
+controlLUT cl(.op_code(op_code), .func(func), .reg_dst(reg_dst), .ALU_src(ALU_src),
 	.mem_read(mem_read), .mem_write(mem_write), .reg_write(reg_write), .branch(branch), .jump(jump),
 	.jump_and_link(jump_and_link), .jump_reg(jump_reg), .ALU_op(ALU_op));
 
