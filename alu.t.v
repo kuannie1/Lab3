@@ -49,6 +49,19 @@ module alu_test ();
 		$display("command: %d", command);
 		$display("result: %d", result);
 
+		operandA = 32'd5; operandB = 32'd25; command = `opSLT; #1500
+		$display("operand A: %d", operandA);
+		$display("operand B: %d", operandB);
+		$display("command: %d", command);
+		$display("result: %d", result);
+
+		operandA = 32'd25; operandB = 32'd24; command = `opCNE; #1500
+		$display("operand A: %d", operandA);
+		$display("operand B: %d", operandB);
+		$display("command: %d", command);
+		$display("result: %d", result);
+
+
 		$finish();
 	end
 

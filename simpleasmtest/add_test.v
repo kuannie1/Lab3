@@ -33,14 +33,18 @@ module add_test ();
     
     
     // Display a few cycles just for quick checking
-    $display("Time | pc         | instruction| Read 1       |   Rs  | Rt     | Rd     | exec result| wb result");
+    $display("Time |         pc | instruction|       Read 1 |   Rs  | Rt     | Rd     | exec result| wb result");
     repeat(2) begin
         $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result);
+        $display("");
         $display("data stored in Rt for addi: %d ", cpu.wd);#200;
     end
     $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result); 
+    $display("");
     $display("data stored in reg file to read: %d, %d ", cpu.read1, cpu.read2); 
+    $display("");
     $display("alu_src: %d, op_code: %b, func: %b", cpu.ALU_src, cpu.op_code, cpu.func); 
+    $display("");
     $display("two operands into ALU: %d, %d ", cpu.read1, cpu.operand2); #200;
     $display("... more execution (see waveform)");   
 
