@@ -30,18 +30,32 @@ module findmin_test ();
 
     // Load CPU memory from (assembly) dump file
     $readmemh(mem_fn, cpu.im.mem); #200;
-    
-    
-    // Display a few cycles just for quick checking
-    $display("Time | pc   | instruction  | Read 1 |   Rs     | Rt   | Rd  | exec result | wb result");
-    repeat(33) begin
+    // addi lines -- getting the assigned values
+    if (cpu.exec_result != 14)
+    $display("exec_result returns wrong value. exec_result: %d", cpu.exec_result); #400
 
-        $display("%4t | %d | %d |  %d  | %b | %b  | %b  | %d | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result, cpu.wb_result); #400;
-        end
-    $display("... more execution (see waveform)");   
+    if (cpu.exec_result != 5)
+    $display("exec_result returns wrong value. exec_result: %d", cpu.exec_result); #400
 
-    // $display("Mem %d", cpu.datmem.memory[]);
-    
+    if (cpu.exec_result != 7)
+    $display("exec_result returns wrong value. exec_result: %d", cpu.exec_result); #400
+
+    if (cpu.exec_result != 10)
+    $display("exec_result returns wrong value. exec_result: %d", cpu.exec_result); #400
+
+    // new stage: getting the minimum value in findmin.asm
+    if (cpu.exec_result != 14)
+    $display("exec_result returns wrong value. exec_result: %d", cpu.exec_result); #400
+
+    if (cpu.exec_result != 0) // initializing t1
+    $display("exec_result returns wrong value. exec_result: %d", cpu.exec_result); #400
+
+    if (cpu.exec_result != 0) // because 14 is not less than 5, reassign to 5
+    $display("exec_result returns wrong value. exec_result: %d", cpu.exec_result); #400
+
+    if (cpu.exec_result != 1) // because 5 (Current minimum) is less than 7
+    $display("exec_result returns wrong value. exec_result: %d", cpu.exec_result); #400
+
     // End execution after some time delay - adjust to match your program
     // or use a smarter approach like looking for an exit syscall or the
     // PC to be the value of the last instruction in your program.
