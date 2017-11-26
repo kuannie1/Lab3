@@ -14,7 +14,7 @@ module instructionmemory
   
 
   // change filename based on assembly .text file
-  initial $readmemh("simpleasmtest/jr.txt", mem);
+  initial $readmemh("simpleasmtest/jal.txt", mem);
   // initial $readmemh("file.text", mem);
 
 

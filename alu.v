@@ -1,5 +1,5 @@
 // ALU
-`include "ALU/logic32bits.v"
+// `include "ALU/logic32bits.v"
 `include "ALU/adder.v"
 `include "ALU/slt.v"
 `include "ALU/cne.v"

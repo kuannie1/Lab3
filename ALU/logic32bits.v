@@ -224,7 +224,7 @@ If the carry_out values are all 0, then the output is inverted to flag 1 for Tru
 module zero_check(
 	output out,
 	input[31:0] check
-);
+);s
 wire[30:0] carry_out;
 `OR or0(carry_out[0], check[0], check[1]);
 `OR or1(carry_out[1], check[2], carry_out[0]);

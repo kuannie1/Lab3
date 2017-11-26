@@ -38,7 +38,7 @@ module cpu_test ();
     $display("Time |         pc | instruction   | Read 1       |   Rs       | Rt     | Rd     | exec result ");
     repeat(10) begin
 
-        $display("%4t | %d | %d    |  %d  |   %b    | %b  | %b  | %b ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result); #400;
+        $display("%4t | %d | %d    |  %d  |   %b    | %b  | %b  | %d ", $time, cpu.pc_out, cpu.instruction, cpu.read1, cpu.Rs, cpu.Rt, cpu.Rd, cpu.exec_result); #400;
         end
     $display("... more execution (see waveform)");   
 

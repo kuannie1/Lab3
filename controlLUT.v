@@ -2,7 +2,6 @@
 	Determines what signals need to be passed through.
 	reg_dst: determines destination of write address (different for R-type and other types of instruction)
 	alu_src: mux control signal for the B operand
-	mem_to_reg: write enable for the register file frin memory
 	mem_read: 'read enable' signal for data memory
 	mem_write: write enable signal for data memory
 	reg_write: write enable for register
@@ -16,7 +15,7 @@
 module controlLUT 
 (	
 	input [5:0] op_code, func,
-	output reg reg_dst, ALU_src, mem_to_reg, mem_read, mem_write, reg_write,
+	output reg reg_dst, ALU_src, mem_read, mem_write, reg_write,
 	output reg branch, jump, jump_and_link, jump_reg,
 	output reg [2:0] ALU_op
 );
@@ -53,7 +52,6 @@ module controlLUT
 			LW: begin
 				reg_dst <= 0;
 				ALU_src <= 1;
-				mem_to_reg <= 1;
 				mem_read <= 1;
 				mem_write <= 0;
 				reg_write <= 1;
@@ -67,7 +65,6 @@ module controlLUT
 			SW: begin
 				reg_dst <= 0;
 				ALU_src <= 1;
-				mem_to_reg <= 0;
 				mem_read <= 0;
 				mem_write <= 1;
 				reg_write <= 0;
@@ -81,7 +78,6 @@ module controlLUT
 			J: begin
 				reg_dst <= 0;
 				ALU_src <= 0;
-				mem_to_reg <= 0;
 				mem_read <= 0;
 				mem_write <= 0;
 				reg_write <= 0;
@@ -95,7 +91,6 @@ module controlLUT
 			JAL: begin
 				reg_dst <= 0;
 				ALU_src <= 0;
-				mem_to_reg <= 0;
 				mem_read <= 0;
 				mem_write <= 0;
 				reg_write <= 1;
@@ -109,7 +104,6 @@ module controlLUT
 			BNE: begin
 				reg_dst <= 0;
 				ALU_src <= 0;
-				mem_to_reg <= 0;
 				mem_read <= 0;
 				mem_write <= 0;
 				reg_write <= 0;
@@ -123,7 +117,6 @@ module controlLUT
 			XORI: begin
 				reg_dst <= 0;
 				ALU_src <= 1;
-				mem_to_reg <= 0;
 				mem_read <= 0;
 				mem_write <= 0;
 				reg_write <= 1;
@@ -137,7 +130,6 @@ module controlLUT
 			ADDI: begin
 				reg_dst <= 0;
 				ALU_src <= 1;
-				mem_to_reg <= 0;
 				mem_read <= 0;
 				mem_write <= 0;
 				reg_write <= 1;
@@ -153,7 +145,6 @@ module controlLUT
 					ADD: begin
 						reg_dst <= 1;
 						ALU_src <= 0;
-						mem_to_reg <= 0;
 						mem_read <= 0;
 						mem_write <= 0;
 						reg_write <= 1;
@@ -167,7 +158,6 @@ module controlLUT
 					SUB: begin
 						reg_dst <= 1;
 						ALU_src <= 0;
-						mem_to_reg <= 0;
 						mem_read <= 0;
 						mem_write <= 0;
 						reg_write <= 1;
@@ -182,7 +172,6 @@ module controlLUT
 					SLT: begin
 						reg_dst <= 1;
 						ALU_src <= 0;
-						mem_to_reg <= 0;
 						mem_read <= 0;
 						mem_write <= 0;
 						reg_write <= 1;
@@ -196,7 +185,6 @@ module controlLUT
 					JR: begin
 						reg_dst <= 1;
 						ALU_src <= 0;
-						mem_to_reg <= 0;
 						mem_read <= 0;
 						mem_write <= 0;
 						reg_write <= 0;
@@ -211,7 +199,6 @@ module controlLUT
 					default: begin
 						reg_dst <= 0;
 						ALU_src <= 0;
-						mem_to_reg <= 0;
 						mem_read <= 0;
 						mem_write <= 0;
 						reg_write <= 0;
@@ -228,7 +215,6 @@ module controlLUT
 				default: begin
 					reg_dst <= 0;
 					ALU_src <= 0;
-					mem_to_reg <= 0;
 					mem_read <= 0;
 					mem_write <= 0;
 					reg_write <= 0;
