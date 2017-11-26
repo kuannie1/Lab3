@@ -27,6 +27,6 @@ xor32 getXOR(xor_output, a, b);
 zero_check checkEqual(isEqual, xor_output); // check if the xor output is all zeroes (all the same)
 // if operands A and B are completely the same, we want to return false
 `NOT notEqual(isNotEqual, isEqual);
-assign result = {30'b0, isNotEqual};
+assign result = {31'b0, isNotEqual};
 
 endmodule

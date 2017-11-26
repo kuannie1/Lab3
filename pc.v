@@ -31,15 +31,3 @@ assign pc_output = pc_input;
 
 
 endmodule
-
-// LW, 0000
-// SW, 0001
-// J, 0010
-// JR, 0011
-// JAL, 0100
-// BNE, 0101
-// XORI, 0110
-// ADDI, 0111
-// ADD, 1000
-// SUB, 1001
-// SLT, 1010

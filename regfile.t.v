@@ -1,10 +1,10 @@
 `include "regfile.v"
 //------------------------------------------------------------------------------
-// Test harness validates hw4testbench by connecting it to various functional 
+// Test harness validates testbench by connecting it to various functional 
 // or broken register files, and verifying that it correctly identifies each
 //------------------------------------------------------------------------------
 
-module hw4testbenchharness();
+module testbenchharness();
 
   wire[31:0]	ReadData1;	// Data from first register read
   wire[31:0]	ReadData2;	// Data from second register read
@@ -64,7 +64,7 @@ endmodule
 
 
 //------------------------------------------------------------------------------
-// Your HW4 test bench
+// Another test bench
 //   Generates signals to drive register file and passes them back up one
 //   layer to the test harness. This lets us plug in various working and
 //   broken register files to test.

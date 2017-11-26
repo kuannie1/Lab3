@@ -41,6 +41,7 @@ module alu_test ();
 		// $display("sum: %b", res);
 
 		// operandA = 32'd20; operandB = 32'b11111111111111111111111111111011; #1500 // command = `opSUB; #1500
+
 		operandA = 32'd20; operandB = 32'd20; command = `opCNE; #1500
 		$display(operandA);
 		$display(operandB);
