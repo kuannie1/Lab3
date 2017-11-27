@@ -62,7 +62,7 @@ module controlLUTtest ();
 			$display("LW failed: jump_and_link is %b", jump_and_link);
 		if (jump_reg !== 0)
 			$display("LW failed: jump_reg %b", jump_reg);
-		if (ALU_op !== `opNONE)
+		if (ALU_op !== `opADD)
 			$display("LW failed: ALU_op is %b", ALU_op);
 
 		// testing SW
@@ -85,7 +85,7 @@ module controlLUTtest ();
 			$display("SW failed: jump_and_link is %b", jump_and_link);
 		if (jump_reg !== 0)
 			$display("SW failed: jump_reg %b", jump_reg);
-		if (ALU_op !== `opNONE)
+		if (ALU_op !== `opADD)
 			$display("SW failed: ALU_op is %b", ALU_op);
 
 		// testing J

@@ -59,7 +59,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= opNONE;
+				ALU_op <= opADD;
 			end
 
 			SW: begin
@@ -72,7 +72,7 @@ module controlLUT
 				jump <= 0;
 				jump_and_link <= 0;
 				jump_reg <= 0;
-				ALU_op <= opNONE;
+				ALU_op <= opADD;
 			end
 
 			J: begin
