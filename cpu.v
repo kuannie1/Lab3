@@ -73,11 +73,10 @@ assign jump_addr = target;
 wire alu1_carryout, alu1_zero, alu1_overflow;
 
 //Muxes to select for pc
-// change name of pc_no_jump to be more appropriate
 wire branch_ctl;
-assign branch_ctl = branch & exec_result[0];
+assign branch_ctl = branch && exec_result[0];
 
-mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch_ctl), .input0(pcplus4), .input1(branch_addr));
+mux2to1 select_branch(.outputofmux(pc_no_jump), .address(exec_result[0]), .input0(pcplus4), .input1(branch_addr));
 mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jump_addr[29:0], 2'b0}), .input1(read1));
 
 mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
@@ -91,7 +90,7 @@ regfile rf(.ReadData1(read1), .ReadData2(read2), .WriteData(wd),
 	.ReadRegister1(Rs), .ReadRegister2(Rt), .WriteRegister(Rdtemp), .RegWrite(reg_write), .Clk(clk));
 
 //select what to write into register
-mux2to1 select_wd(.outputofmux(wd), .address(jump_and_link), .input0(wb_result), .input1(pcplus4));
+mux2to1 select_wd(.outputofmux(wd), .address(jump_and_link), .input0(wb_result), .input1(jump_addr));
 
 mux2to1_5bit select_wa(.outputofmux(Rdtemp), .address(reg_dst), .input0(Rt), .input1(Rd));
 
