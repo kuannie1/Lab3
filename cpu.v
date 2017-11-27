@@ -76,6 +76,7 @@ wire alu1_carryout, alu1_zero, alu1_overflow;
 // change name of pc_no_jump to be more appropriate
 wire branch_ctl;
 assign branch_ctl = branch & exec_result[0];
+
 mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch_ctl), .input0(pcplus4), .input1(branch_addr));
 mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jump_addr[29:0], 2'b0}), .input1(read1));
 
