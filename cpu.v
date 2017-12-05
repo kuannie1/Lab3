@@ -50,7 +50,7 @@ wire [4:0]	shift;
 wire [15:0]	imm;
 wire [25:0]	target;
 //Control signals:
-wire reg_dst, ALU_src, mem_to_reg, mem_read, mem_write, reg_write;
+wire reg_dst, ALU_src, mem_read, mem_write, reg_write;
 wire branch, jump, jump_and_link, jump_reg;
 wire [2:0] ALU_op;
 
@@ -61,7 +61,7 @@ wire [31:0] dm_out;
 instructiondecode id(.instruction(instruction), .op_code(op_code), .func(func), .Rs(Rs), .Rt(Rt), .Rd(Rd),
 	.shift(shift), .imm(imm), .target(target));
 
-controlLUT cl(.op_code(op_code), .func(func), .reg_dst(reg_dst), .ALU_src(ALU_src), .mem_to_reg(mem_to_reg),
+controlLUT cl(.op_code(op_code), .func(func), .reg_dst(reg_dst), .ALU_src(ALU_src),
 	.mem_read(mem_read), .mem_write(mem_write), .reg_write(reg_write), .branch(branch), .jump(jump),
 	.jump_and_link(jump_and_link), .jump_reg(jump_reg), .ALU_op(ALU_op));
 
@@ -73,10 +73,10 @@ assign jump_addr = target;
 wire alu1_carryout, alu1_zero, alu1_overflow;
 
 //Muxes to select for pc
-// change name of pc_no_jump to be more appropriate
 wire branch_ctl;
-assign branch_ctl = branch & exec_result[0];
-mux2to1 select_branch(.outputofmux(pc_no_jump), .address(branch_ctl), .input0(pcplus4), .input1(branch_addr));
+assign branch_ctl = branch && exec_result[0];
+
+mux2to1 select_branch(.outputofmux(pc_no_jump), .address(exec_result[0]), .input0(pcplus4), .input1(branch_addr));
 mux2to1 select_jump_addr(.outputofmux(pc_jump), .address(jump_reg), .input0({jump_addr[29:0], 2'b0}), .input1(read1));
 
 mux2to1 select_jump(.outputofmux(pc_next), .address(jump), .input0(pc_no_jump), .input1(pc_jump));
@@ -90,7 +90,7 @@ regfile rf(.ReadData1(read1), .ReadData2(read2), .WriteData(wd),
 	.ReadRegister1(Rs), .ReadRegister2(Rt), .WriteRegister(Rdtemp), .RegWrite(reg_write), .Clk(clk));
 
 //select what to write into register
-mux2to1 select_wd(.outputofmux(wd), .address(jump_and_link), .input0(wb_result), .input1(pcplus4));
+mux2to1 select_wd(.outputofmux(wd), .address(jump_and_link), .input0(wb_result), .input1(jump_addr));
 
 mux2to1_5bit select_wa(.outputofmux(Rdtemp), .address(reg_dst), .input0(Rt), .input1(Rd));
 
@@ -100,16 +100,19 @@ wire [31:0] signextendimm;
 signextend se1(.num(imm), .result(signextendimm));
 
 wire [31:0] operand2;
-
+// the second operand can be an immediate or directly from the register file
 mux2to1 select_operand2(.outputofmux(operand2), .address(ALU_src), .input0(read2), .input1(signextendimm));
 
+// find the calculated output based on operand1 and the selected operand2
 ALU alu_exec(.result(exec_result), .carryout(alu1_carryout), .zero(alu1_zero), .overflow(alu1_overflow),
 	.operandA(read1), .operandB(operand2), .command(ALU_op));
 
 
 wire [31:0] readData;
 
+// store results into datamemory if needed
 datamemory datmem(.clk(clk), .dataOut(readData), .address(exec_result[13:2]), .writeEnable(mem_write), .dataIn(read2));
+
 
 mux2to1 select_WB(.outputofmux(wb_result), .address(mem_read), .input0(exec_result), .input1(readData));
 

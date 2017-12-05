@@ -12,7 +12,6 @@ module instructionmemory
   
   reg [31:0] mem[4095:0];  
   
-
   initial $readmemh("simpleasmtest/add.txt", mem);
 
   assign DataOut = mem[Addr];
